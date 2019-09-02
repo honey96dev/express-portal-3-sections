@@ -1,0 +1,31 @@
+module.exports = {
+    server: {
+        isDev: false,
+        port: 8080,
+        baseUrl: 'http://127.0.0.1:8080/',
+        name: 'Express Project',
+        description: 'Express Project',
+        author: 'Zhenlong J.',
+        secret: 'expressproject@@',
+        // sslKey: './sslcert/localhost.key',
+        // sslCert: './sslcert/localhost.cert',
+        // sslCA: './sslcert/alphasslrootcabundle.crt',
+        environment: 'development',
+    },
+    mysql: {
+        connectionLimit: 10,
+        host: '127.0.0.1',
+        user: 'root',
+        password: '',
+        database: 'express_project',
+        port: 3306
+    },
+    session: {
+        name: 'ExpressProject',
+        key: 'expressproject',
+        secret: 'expressproject@@',
+    },
+    dbTblName: {
+        users: 'users',
+    },
+};
