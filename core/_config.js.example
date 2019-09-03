@@ -1,4 +1,4 @@
-module.export = {
+module.exports = {
   server: {
     port: 80,
     baseUrl: 'http://108.160.135.63/',
