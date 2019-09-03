@@ -1,29 +1,23 @@
+import {server, mysql} from './_config';
 module.exports = {
     server: {
         isDev: false,
-        port: 8080,
-        baseUrl: 'http://127.0.0.1:8080/',
+        port: server.port,
+        baseUrl: server.baseUrl,
         name: 'Express Project',
         description: 'Express Project',
         author: 'Zhenlong J.',
-        secret: 'expressproject@@',
+        secret: 'portal3sections@@',
         // sslKey: './sslcert/localhost.key',
         // sslCert: './sslcert/localhost.cert',
         // sslCA: './sslcert/alphasslrootcabundle.crt',
         environment: 'development',
     },
-    mysql: {
-        connectionLimit: 10,
-        host: '127.0.0.1',
-        user: 'root',
-        password: '',
-        database: 'express_project',
-        port: 3306
-    },
+    mysql: mysql,
     session: {
-        name: 'ExpressProject',
-        key: 'expressproject',
-        secret: 'expressproject@@',
+        name: 'portal3sections',
+        key: 'portal3sections',
+        secret: 'portal3sections@@',
     },
     dbTblName: {
         users: 'users',
