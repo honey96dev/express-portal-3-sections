@@ -5,6 +5,7 @@ import {dbTblName, session} from '../../../core/config';
 import dbConn from '../../../core/dbConn';
 import myCrypto from '../../../core/myCrypto';
 import strings from '../../../core/strings';
+import tracer from "../../../core/tracer";
 
 const router = express.Router();
 
@@ -16,7 +17,8 @@ const signInProc = (req, res, next) => {
     let sql = sprintf("SELECT `email` FROM `%s` WHERE BINARY `username` = '%s';", dbTblName.admins, username);
     dbConn.query(sql, null, (error, rows, fields) => {
         if (error) {
-            console.error('admin-signin', __filename, JSON.stringify(error));
+            tracer.error(JSON.stringify(error));
+            tracer.error(__filename);
             res.status(200).send({
                 result: strings[language].error,
                 message: strings[language].unknownServerError,
@@ -36,7 +38,8 @@ const signInProc = (req, res, next) => {
         // console.log(sql, hash);
         dbConn.query(sql, null, (error, rows, fields) => {
             if (error) {
-                console.error('admin-signin', __filename, JSON.stringify(error));
+                tracer.error(JSON.stringify(error));
+                tracer.error(__filename);
                 res.status(200).send({
                     result: strings[language].error,
                     message: strings[language].unknownServerError,

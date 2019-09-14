@@ -23,4 +23,5 @@ export default {
   invalidParameters: 'Invalid Parameters',
   notUploaded: 'Not uploaded',
   successfullyUploaded: 'Successfully uploaded',
+  successfullyPosted: 'Successfully posted',
 };

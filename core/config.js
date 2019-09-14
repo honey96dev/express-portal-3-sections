@@ -31,7 +31,17 @@ const dbTblName = {
   admins: 'admins',
   mediaSlider: 'media_slider',
   ourServices: 'our_services',
+  businessPartner: 'business_partner',
+  contactUs: 'contact_us',
+  directorBoard: 'director_board',
   humanOurServices: 'human_our_services',
+};
+
+const uploadPath = {
+  mediaSlider: '/uploads/media-slider',
+  ourServices: '/uploads/our-services',
+  businessPartner: '/uploads/business-partner',
+  directorBoard: '/uploads/director-board',
 };
 
 export {
@@ -39,6 +49,7 @@ export {
   mysql,
   session,
   dbTblName,
+  uploadPath,
 }
 
 export default {
@@ -46,4 +57,5 @@ export default {
   mysql,
   session,
   dbTblName,
+  uploadPath,
 }

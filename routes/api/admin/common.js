@@ -27,9 +27,10 @@ const uploadProc = (req, res, next) => {
 
     const file = files.file;
     const extension = path.extname(file.name);
-    const appDir = path.dirname(require.main.filename);
+    const appDir = process.cwd();
+    // const appDir = path.dirname(require.main.filename);
     const fileName = sprintf('%s%s', uuid(), extension);
-    const fileDir = sprintf('%s/../public/uploads/%s', appDir, dir);
+    const fileDir = sprintf('%s/public/uploads/%s', appDir, dir);
     const filePath = sprintf('%s/%s', fileDir, fileName);
     mkdirp(fileDir, () => {
         file.mv(filePath, function(err) {

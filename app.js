@@ -31,15 +31,14 @@ app.use(fileUpload({
   limits: { fileSize: 50 * 1024 * 1024 },
 }));
 
-app.use('/api', expressJwt({secret: session.secret})
-  .unless({
-    path: [
-      '/api/auth/sign-in',
-      '/api/auth/sign-up',
-      '/api/admin/auth/sign-in',
-      /\/api\/admin\/*/,
-    ]
-  }));
+// app.use('/api', expressJwt({secret: session.secret})
+//   .unless({
+//     path: [
+//       '/api/auth/sign-in',
+//       '/api/auth/sign-up',
+//       /\/api\/admin\/*/,
+//     ]
+//   }));
 
 app.use('/api/admin', expressJwt({secret: session.secretAdmin})
   .unless({

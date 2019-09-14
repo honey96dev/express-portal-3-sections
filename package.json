@@ -5,7 +5,7 @@
   "scripts": {
     "startDev": "node ./bin/start-webpp",
     "startProd": "node ./backend/server.js",
-    "buildProd": "rd /S /Q backend && webpack --mode production --config webpack.server.config.js"
+    "buildProd": "rimraf backend && webpack --mode production --config webpack.server.config.js"
   },
   "dependencies": {
     "compression": "^1.7.4",
@@ -24,10 +24,7 @@
     "mysql2": "^1.7.0",
     "pug": "2.0.4",
     "sprintf-js": "^1.1.2",
-    "uuid": "^3.3.3",
-    "webpack": "^4.39.3",
-    "webpack-cli": "^3.3.8",
-    "webpack-node-externals": "^1.7.2"
+    "uuid": "^3.3.3"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
@@ -37,6 +34,10 @@
     "babel-core": "^6.26.3",
     "babel-loader": "^8.0.6",
     "babel-preset-env": "^1.7.0",
-    "tracer": "^1.0.1"
+    "rimraf": "^3.0.0",
+    "tracer": "^1.0.1",
+    "webpack": "^4.39.3",
+    "webpack-cli": "^3.3.8",
+    "webpack-node-externals": "^1.7.2"
   }
 }

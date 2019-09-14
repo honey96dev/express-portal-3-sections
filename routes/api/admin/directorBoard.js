@@ -13,7 +13,7 @@ const _loadData = (req, res, next) => {
     const params = req.body;
     const {category} = params;
     const langs = strings[language];
-    let sql = sprintf("SELECT * FROM `%s` WHERE `category` = '%s';", dbTblName.mediaSlider, category);
+    let sql = sprintf("SELECT * FROM `%s` WHERE `category` = '%s';", dbTblName.directorBoard, category);
 
     dbConn.query(sql, null, (error, rows, fields) => {
         if (error) {
@@ -38,11 +38,11 @@ const _saveData = (req, res, next, mode) => {
     const params = req.body;
     const {id, category, name, title, description, media, note, originMedia, mediaSize} = params;
     const langs = strings[language];
-    const meidaPath = media.startsWith('/') ? media : `${uploadPath.mediaSlider}/${media}`;
+    const meidaPath = media.startsWith('/') ? media : `${uploadPath.directorBoard}/${media}`;
     const rows = [
         [id, category, name, title, description, meidaPath, originMedia, mediaSize, note],
     ];
-    let sql = sprintf("INSERT INTO `%s` VALUES ? ON DUPLICATE KEY UPDATE `name` = VALUES(`name`), `title` = VALUES(`title`), `description` = VALUES(`description`), `media` = VALUES(`media`), `originMedia` = VALUES(`originMedia`), `mediaSize` = VALUES(`mediaSize`), `note` = VALUES(`note`);", dbTblName.mediaSlider);
+    let sql = sprintf("INSERT INTO `%s` VALUES ? ON DUPLICATE KEY UPDATE `name` = VALUES(`name`), `title` = VALUES(`title`), `description` = VALUES(`description`), `media` = VALUES(`media`), `originMedia` = VALUES(`originMedia`), `mediaSize` = VALUES(`mediaSize`), `note` = VALUES(`note`);", dbTblName.directorBoard);
     dbConn.query(sql, [rows], (error, result, fields) => {
         if (error) {
             tracer.error(JSON.stringify(error));
@@ -81,7 +81,7 @@ const deleteProc = (req, res, next) => {
     const params = req.body;
     const {id} = params;
     const langs = strings[language];
-    let sql = sprintf("DELETE FROM `%s` WHERE `id` = '%d';", dbTblName.mediaSlider, id);
+    let sql = sprintf("DELETE FROM `%s` WHERE `id` = '%d';", dbTblName.directorBoard, id);
     dbConn.query(sql, null, (error, result, fields) => {
         if (error) {
             tracer.error(JSON.stringify(error));

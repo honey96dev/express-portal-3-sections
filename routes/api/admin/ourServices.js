@@ -1,6 +1,6 @@
 import express from 'express';
 import {sprintf} from 'sprintf-js';
-import {dbTblName} from '../../../core/config';
+import {dbTblName, uploadPath} from '../../../core/config';
 import dbConn from '../../../core/dbConn';
 import strings from '../../../core/strings';
 import tracer from '../../../core/tracer';
@@ -14,6 +14,7 @@ const _loadData = (req, res, next) => {
     const {category} = params;
     const langs = strings[language];
     let sql = sprintf("SELECT * FROM `%s` WHERE `category` = '%s';", dbTblName.ourServices, category);
+    console.log(sql);
 
     dbConn.query(sql, null, (error, rows, fields) => {
         if (error) {
@@ -38,11 +39,11 @@ const _saveData = (req, res, next, mode) => {
     const params = req.body;
     const {id, category, name, title, description, media, note, originMedia, mediaSize} = params;
     const langs = strings[language];
-    const meidaPath = media.startsWith('/') ? media : `${consts.uploadPath.mediaSlider}/${media}`;
+    const meidaPath = media.startsWith('/') ? media : `${uploadPath.ourServices}/${media}`;
     const rows = [
         [id, category, name, title, description, meidaPath, originMedia, mediaSize, note],
     ];
-    let sql = sprintf("INSERT INTO `%s` VALUES ? ON DUPLICATE KEY UPDATE `name` = VALUES(`name`), `title` = VALUES(`title`), `description` = VALUES(`description`), `media` = VALUES(`media`), `note` = VALUES(`note`), `originMedia` = VALUES(`originMedia`);", dbTblName.ourServices);
+    let sql = sprintf("INSERT INTO `%s` VALUES ? ON DUPLICATE KEY UPDATE `name` = VALUES(`name`), `title` = VALUES(`title`), `description` = VALUES(`description`), `media` = VALUES(`media`), `originMedia` = VALUES(`originMedia`), `mediaSize` = VALUES(`mediaSize`), `note` = VALUES(`note`);", dbTblName.ourServices);
     dbConn.query(sql, [rows], (error, result, fields) => {
         if (error) {
             tracer.error(JSON.stringify(error));

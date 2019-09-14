@@ -8,7 +8,8 @@ const mysql = {
   user: 'root',
   password: '',
   database: 'portal3sections',
-  port: 3306
+  port: 3306,
+  connectTimeout: 15000,
 };
 
 export {

@@ -23,4 +23,5 @@ export default {
   invalidParameters: 'معلمات غير صالحة',
   notUploaded: 'لم يتم الرفع',
   successfullyUploaded: 'تم الرفع بنجاح',
+  successfullyPosted: 'تم النشر بنجاح',
 };

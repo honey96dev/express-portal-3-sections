@@ -13,7 +13,8 @@ const _loadData = (req, res, next) => {
     const params = req.body;
     const {category} = params;
     const langs = strings[language];
-    let sql = sprintf("SELECT * FROM `%s` WHERE `category` = '%s';", dbTblName.mediaSlider, category);
+    let sql = sprintf("SELECT * FROM `%s` WHERE `category` = '%s';", dbTblName.businessPartner, category);
+    console.log(sql);
 
     dbConn.query(sql, null, (error, rows, fields) => {
         if (error) {
@@ -36,13 +37,13 @@ const _loadData = (req, res, next) => {
 const _saveData = (req, res, next, mode) => {
     const language = req.get('language');
     const params = req.body;
-    const {id, category, name, title, description, media, note, originMedia, mediaSize} = params;
+    const {id, category, name, title, description, media, note, originMedia, mediaSize, social1, social2, social3} = params;
     const langs = strings[language];
-    const meidaPath = media.startsWith('/') ? media : `${uploadPath.mediaSlider}/${media}`;
+    const meidaPath = media.startsWith('/') ? media : `${uploadPath.businessPartner}/${media}`;
     const rows = [
-        [id, category, name, title, description, meidaPath, originMedia, mediaSize, note],
+        [id, category, name, title, description, meidaPath, originMedia, mediaSize, social1, social2, social3, note],
     ];
-    let sql = sprintf("INSERT INTO `%s` VALUES ? ON DUPLICATE KEY UPDATE `name` = VALUES(`name`), `title` = VALUES(`title`), `description` = VALUES(`description`), `media` = VALUES(`media`), `originMedia` = VALUES(`originMedia`), `mediaSize` = VALUES(`mediaSize`), `note` = VALUES(`note`);", dbTblName.mediaSlider);
+    let sql = sprintf("INSERT INTO `%s` VALUES ? ON DUPLICATE KEY UPDATE `name` = VALUES(`name`), `title` = VALUES(`title`), `description` = VALUES(`description`), `media` = VALUES(`media`), `originMedia` = VALUES(`originMedia`), `mediaSize` = VALUES(`mediaSize`), `social1` = VALUES(`social1`), `social2` = VALUES(`social2`), `social3` = VALUES(`social3`), `note` = VALUES(`note`);", dbTblName.businessPartner);
     dbConn.query(sql, [rows], (error, result, fields) => {
         if (error) {
             tracer.error(JSON.stringify(error));
@@ -81,7 +82,7 @@ const deleteProc = (req, res, next) => {
     const params = req.body;
     const {id} = params;
     const langs = strings[language];
-    let sql = sprintf("DELETE FROM `%s` WHERE `id` = '%d';", dbTblName.mediaSlider, id);
+    let sql = sprintf("DELETE FROM `%s` WHERE `id` = '%d';", dbTblName.businessPartner, id);
     dbConn.query(sql, null, (error, result, fields) => {
         if (error) {
             tracer.error(JSON.stringify(error));
