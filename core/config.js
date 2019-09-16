@@ -33,6 +33,7 @@ const dbTblName = {
   ourServices: 'our_services',
   businessPartner: 'business_partner',
   contactUs: 'contact_us',
+  ourClients: 'our_clients',
   directorBoard: 'director_board',
   humanOurServices: 'human_our_services',
 };
@@ -41,6 +42,7 @@ const uploadPath = {
   mediaSlider: '/uploads/media-slider',
   ourServices: '/uploads/our-services',
   businessPartner: '/uploads/business-partner',
+  ourClients: '/uploads/our-clients',
   directorBoard: '/uploads/director-board',
 };
 
