@@ -11,7 +11,6 @@ const nodeExternals = require('webpack-node-externals');
 
 module.exports = (env, argv) => {
   const SERVER_PATH = './bin/start-webapp.js';
-
   return ({
     entry: {
       server: SERVER_PATH,
@@ -19,7 +18,7 @@ module.exports = (env, argv) => {
     output: {
       path: path.join(__dirname, 'backend'),
       publicPath: '/',
-      filename: '[name].js'
+      filename: '[name].' + argv.mode + '.js',
     },
     mode: argv.mode,
     target: 'node',
