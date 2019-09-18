@@ -1,6 +1,6 @@
 import express from 'express';
 import {sprintf} from 'sprintf-js';
-import {dbTblName} from '../../core/config';
+import {dbTblName, uploadPath} from '../../core/config';
 import dbConn from '../../core/dbConn';
 import strings from '../../core/strings';
 import tracer from '../../core/tracer';
@@ -10,9 +10,9 @@ const router = express.Router();
 const _loadData = (req, res, next) => {
   const language = req.get('language');
   const params = req.body;
-  const {category} = params;
+  const {scope, category, limit} = params;
   const langs = strings[language];
-  let sql = sprintf("SELECT * FROM `%s` WHERE `category` = '%s';", dbTblName.ourServices, category);
+  let sql = sprintf("SELECT * FROM `%s_%s` WHERE `category` = '%s' ORDER BY `timestamp` %s LIMIT %d;", scope, dbTblName.events, category, scope === 'previous' ? 'DESC' : 'ASC', limit);
 
   dbConn.query(sql, null, (error, rows, fields) => {
     if (error) {

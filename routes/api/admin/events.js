@@ -10,9 +10,9 @@ const router = express.Router();
 const _loadData = (req, res, next) => {
   const language = req.get('language');
   const params = req.body;
-  const {category} = params;
+  const {scope, category, limit} = params;
   const langs = strings[language];
-  let sql = sprintf("SELECT * FROM `%s` WHERE `category` = '%s';", dbTblName.ourServices, category);
+  let sql = sprintf("SELECT * FROM `%s_%s` WHERE `category` = '%s' ORDER BY `timestamp` %s;", scope, dbTblName.events, category, scope === 'previous' ? 'DESC' : 'ASC');
 
   dbConn.query(sql, null, (error, rows, fields) => {
     if (error) {
@@ -35,13 +35,13 @@ const _loadData = (req, res, next) => {
 const _saveData = (req, res, next, mode) => {
   const language = req.get('language');
   const params = req.body;
-  const {id, category, name, title, description, media, originMedia, mediaSize, note} = params;
+  const {scope, id, category, type, name, timestamp, title, description, media, originMedia, mediaSize, note} = params;
   const langs = strings[language];
-  const meidaPath = media.startsWith('/') ? media : `${uploadPath.ourServices}/${media}`;
+  const meidaPath = media.startsWith('/') ? media : `${uploadPath.previousEvents}/${media}`;
   const rows = [
-    [id, category, name, title, description, meidaPath, originMedia, mediaSize, note],
+    [id, category, type, name, timestamp, title, description, meidaPath, originMedia, mediaSize, note],
   ];
-  let sql = sprintf("INSERT INTO `%s` VALUES ? ON DUPLICATE KEY UPDATE `name` = VALUES(`name`), `title` = VALUES(`title`), `description` = VALUES(`description`), `media` = VALUES(`media`), `originMedia` = VALUES(`originMedia`), `mediaSize` = VALUES(`mediaSize`), `note` = VALUES(`note`);", dbTblName.ourServices);
+  let sql = sprintf("INSERT INTO `%s_%s` VALUES ? ON DUPLICATE KEY UPDATE `type` = VALUES(`type`), `name` = VALUES(`name`), `timestamp` = VALUES(`timestamp`), `title` = VALUES(`title`), `description` = VALUES(`description`), `media` = VALUES(`media`), `originMedia` = VALUES(`originMedia`), `mediaSize` = VALUES(`mediaSize`), `note` = VALUES(`note`);", scope, dbTblName.events);
   dbConn.query(sql, [rows], (error, result, fields) => {
     if (error) {
       tracer.error(JSON.stringify(error));
@@ -79,7 +79,7 @@ const deleteProc = (req, res, next) => {
   const params = req.body;
   const {id} = params;
   const langs = strings[language];
-  let sql = sprintf("DELETE FROM `%s` WHERE `id` = '%d';", dbTblName.ourServices, id);
+  let sql = sprintf("DELETE FROM `%s` WHERE `id` = '%d';", dbTblName.previousEvents, id);
   dbConn.query(sql, null, (error, result, fields) => {
     if (error) {
       tracer.error(JSON.stringify(error));

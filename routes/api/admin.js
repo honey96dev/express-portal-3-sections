@@ -7,6 +7,7 @@ import humanOurServicesRouter from './admin/ourServices';
 import businessPartnerRouter from './admin/businessPartner';
 import ourClientsRouter from './admin/ourClients';
 import directorBoardRouter from './admin/directorBoard';
+import eventsRouter from './admin/events';
 
 const router = express.Router();
 
@@ -18,5 +19,6 @@ router.use('/our-services', humanOurServicesRouter);
 router.use('/business-partner', businessPartnerRouter);
 router.use('/our-clients', ourClientsRouter);
 router.use('/director-board', directorBoardRouter);
+router.use('/events', eventsRouter);
 
 export default router;

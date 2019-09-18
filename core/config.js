@@ -35,6 +35,9 @@ const dbTblName = {
   contactUs: 'contact_us',
   ourClients: 'our_clients',
   directorBoard: 'director_board',
+  events: 'events',
+  previousEvents: 'previous_events',
+  upcomingEvents: 'upcoming_events',
   humanOurServices: 'human_our_services',
 };
 
@@ -44,6 +47,8 @@ const uploadPath = {
   businessPartner: '/uploads/business-partner',
   ourClients: '/uploads/our-clients',
   directorBoard: '/uploads/director-board',
+  previousEvents: '/uploads/previous-events',
+  upcomingEvents: '/uploads/upcoming-events',
 };
 
 export {

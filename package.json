@@ -3,9 +3,11 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "startDev": "node ./bin/start-webpp",
+    "startDev": "node ./bin/start-webapp",
+    "startMon": "nodemon ./backend/server.js localhost 8080",
     "startProd": "node ./backend/server.js",
-    "buildProd": "rimraf backend && webpack --mode production --config webpack.server.config.js"
+    "buildProd": "rimraf backend && webpack --mode production --config webpack.server.config.js",
+    "buildDev": "rimraf backend && webpack --mode development --config webpack.server.config.js --watch"
   },
   "dependencies": {
     "compression": "^1.7.4",
@@ -34,6 +36,7 @@
     "babel-core": "^6.26.3",
     "babel-loader": "^8.0.6",
     "babel-preset-env": "^1.7.0",
+    "nodemon": "^1.19.2",
     "rimraf": "^3.0.0",
     "tracer": "^1.0.1",
     "webpack": "^4.39.3",
