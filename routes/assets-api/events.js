@@ -12,7 +12,10 @@ const _loadData = (req, res, next) => {
   const params = req.body;
   const {scope, category, limit} = params;
   const langs = strings[language];
-  let sql = sprintf("SELECT * FROM `%s_%s` WHERE `category` = '%s' ORDER BY `timestamp` %s LIMIT %d;", scope, dbTblName.events, category, scope === 'previous' ? 'DESC' : 'ASC', limit);
+  const today = new Date();
+  const todayStr = sprintf('%04d-%02d-%02d', today.getFullYear(), today.getMonth() + 1, today.getDate());
+
+  let sql = sprintf("SELECT * FROM `%s_%s` WHERE `category` = '%s' AND `timestamp` %s '%s' ORDER BY `timestamp` %s LIMIT %d;", scope, dbTblName.events, category, scope === 'previous' ? '<=' : '>=', todayStr, scope === 'previous' ? 'DESC' : 'ASC', limit);
 
   dbConn.query(sql, null, (error, rows, fields) => {
     if (error) {
