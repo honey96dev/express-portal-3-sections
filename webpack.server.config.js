@@ -8,6 +8,8 @@
 const path = require('path');
 const webpack = require('webpack');
 const nodeExternals = require('webpack-node-externals');
+const JavaScriptObfuscator = require('webpack-obfuscator');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = (env, argv) => {
   const SERVER_PATH = './bin/start-webapp.js';
@@ -39,7 +41,21 @@ module.exports = (env, argv) => {
           }
         }
       ]
-    }
+    },
+    plugins: [
+      new JavaScriptObfuscator ({
+        compact: true,
+        controlFlowFlattening: true,
+        disableConsoleOutput: argv.mode === 'production',
+        renameGlobals: true,
+        rotateUnicodeArray: true,
+        stringArray: true,
+        stringArrayEncoding: 'rc4',
+      }, []),
+    ],
+    optimization: {
+      // minimizer: [new UglifyJsPlugin()],
+    },
   })
 }
 

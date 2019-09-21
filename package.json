@@ -39,8 +39,10 @@
     "nodemon": "^1.19.2",
     "rimraf": "^3.0.0",
     "tracer": "^1.0.1",
+    "uglifyjs-webpack-plugin": "^2.2.0",
     "webpack": "^4.39.3",
     "webpack-cli": "^3.3.8",
-    "webpack-node-externals": "^1.7.2"
+    "webpack-node-externals": "^1.7.2",
+    "webpack-obfuscator": "^0.18.3"
   }
 }
