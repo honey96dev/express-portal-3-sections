@@ -42,17 +42,17 @@ module.exports = (env, argv) => {
         }
       ]
     },
-    plugins: [
+    plugins: argv.mode === 'production' ? [
       new JavaScriptObfuscator ({
         compact: true,
         controlFlowFlattening: true,
-        disableConsoleOutput: argv.mode === 'production',
+        disableConsoleOutput: true,
         renameGlobals: true,
         rotateUnicodeArray: true,
         stringArray: true,
         stringArrayEncoding: 'rc4',
-      }, []),
-    ],
+      }, []) ,
+    ] : [],
     optimization: {
       // minimizer: [new UglifyJsPlugin()],
     },

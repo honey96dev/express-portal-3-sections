@@ -19,6 +19,7 @@ export default {
   successfullyEdited: 'تم التعديل بنجاح',
   successfullyChanged: 'تغيرت بنجاح',
   successfullyDeleted: 'تم الحذف بنجاح',
+  successfullyReset: 'إعادة تعيين بنجاح',
   currentPasswordIncorrect: 'كلمة المرور الحالية غير صحيحة',
   failedDueToUnknownServerError: 'فشل بسبب خطأ غير معروف في الخادم',
   invalidParameters: 'معلمات غير صالحة',

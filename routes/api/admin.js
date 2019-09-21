@@ -1,6 +1,7 @@
 import express from 'express';
 import commonRouter from './admin/common';
 import authRouter from './admin/auth';
+import userMgmt from './admin/userMgmt';
 import mediaSliderRouter from './admin/mediaSlider';
 import contactUsRouter from './admin/contactUs';
 import humanOurServicesRouter from './admin/ourServices';
@@ -13,6 +14,7 @@ const router = express.Router();
 
 router.use('/common', commonRouter);
 router.use('/auth', authRouter);
+router.use('/user-mgmt', userMgmt);
 router.use('/media-slider', mediaSliderRouter);
 router.use('/contact-us', contactUsRouter);
 router.use('/our-services', humanOurServicesRouter);

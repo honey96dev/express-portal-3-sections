@@ -19,6 +19,7 @@ export default {
   successfullyEdited: 'Successfully edited',
   successfullyChanged: 'Successfully changed',
   successfullyDeleted: 'Successfully Deleted',
+  successfullyReset: 'Successfully Reset',
   currentPasswordIncorrect: 'Current password is incorrect',
   failedDueToUnknownServerError: 'Failed due to unknown server error',
   invalidParameters: 'Invalid Parameters',

@@ -16,7 +16,7 @@ const signInProc = async (req, res, next) => {
   const {username, password} = params;
 
   let sql = sprintf("SELECT `email` FROM `%s` WHERE BINARY `username` = '%s';", dbTblName.admins, username);
-  // dbConn.query(sql, null, (error, rows, fields) => {
+  // dbConn.query(sql, null, (error, rows, fields) =>  {
   //   if (error) {
   //     tracer.error(JSON.stringify(error));
   //     tracer.error(__filename);
