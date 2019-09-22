@@ -49,13 +49,13 @@ const _loadData = async (req, res, next) => {
 const _saveData = async (req, res, next, mode) => {
   const language = req.get('language');
   const params = req.body;
-  const {id, category, timestamp, name, photo, photoOriginMedia, photoMediaSize, stars, title, feedback, files, filesOriginMedia, filesMediaSize, note} = params;
+  const {id, category, timestamp, nameEn, nameAr, photo, photoOriginMedia, photoMediaSize, stars, title, feedbackEn, feedbackAr, files, filesOriginMedia, filesMediaSize, note} = params;
   const langs = strings[language];
   const photoMediaPath = photo.startsWith('/') ? photo : `${uploadPath.ourClients}/${photo}`;
   const rows = [
-    [id, category, timestamp, name, photoMediaPath, photoOriginMedia, photoMediaSize, stars, title, feedback, files, filesOriginMedia, filesMediaSize, note],
+    [id, category, timestamp, nameEn, nameAr, photoMediaPath, photoOriginMedia, photoMediaSize, stars, title, feedbackEn, feedbackAr, files, filesOriginMedia, filesMediaSize, note],
   ];
-  let sql = sprintf("INSERT INTO `%s` VALUES ? ON DUPLICATE KEY UPDATE `timestamp` = VALUES(`timestamp`), `name` = VALUES(`name`), `photo` = VALUES(`photo`), `photoOriginMedia` = VALUES(`photoOriginMedia`), `photoMediaSize` = VALUES(`photoMediaSize`), `stars` = VALUES(`stars`), `title` = VALUES(`title`), `feedback` = VALUES(`feedback`), `files` = VALUES(`files`), `filesOriginMedia` = VALUES(`filesOriginMedia`), `filesMediaSize` = VALUES(`filesMediaSize`), `note` = VALUES(`note`);", dbTblName.ourClients);
+  let sql = sprintf("INSERT INTO `%s` VALUES ? ON DUPLICATE KEY UPDATE `timestamp` = VALUES(`timestamp`), `nameEn` = VALUES(`nameEn`), `nameAr` = VALUES(`nameAr`), `photo` = VALUES(`photo`), `photoOriginMedia` = VALUES(`photoOriginMedia`), `photoMediaSize` = VALUES(`photoMediaSize`), `stars` = VALUES(`stars`), `title` = VALUES(`title`), `feedbackEn` = VALUES(`feedbackEn`), `feedbackAr` = VALUES(`feedbackAr`), `files` = VALUES(`files`), `filesOriginMedia` = VALUES(`filesOriginMedia`), `filesMediaSize` = VALUES(`filesMediaSize`), `note` = VALUES(`note`);", dbTblName.ourClients);
   // dbConn.query(sql, [rows], (error, result, fields) => {
   //   if (error) {
   //     tracer.error(JSON.stringify(error));

@@ -6,8 +6,8 @@
     "startDev": "node ./bin/start-webapp",
     "startMon": "nodemon ./backend/server.development.js localhost 8080",
     "startProd": "node ./backend/server.production.js",
-    "buildProd": "rimraf backend && webpack --mode production --config webpack.server.config.js",
-    "buildDev": "rimraf backend && webpack --mode development --config webpack.server.config.js --watch"
+    "buildProd": "rimraf backend/server.production.js && webpack --mode production --config webpack.server.config.js",
+    "buildDev": "rimraf backend/server.development.js && webpack --mode development --config webpack.server.config.js --watch"
   },
   "dependencies": {
     "babel-loader": "^8.0.6",

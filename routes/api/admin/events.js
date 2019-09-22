@@ -49,13 +49,13 @@ const _loadData = async (req, res, next) => {
 const _saveData = async (req, res, next, mode) => {
   const language = req.get('language');
   const params = req.body;
-  const {scope, id, category, type, name, timestamp, title, description, media, originMedia, mediaSize, note} = params;
+  const {scope, id, category, typeEn, typeAr, nameEn, nameAr, timestamp, titleEn, titleAr, descriptionEn, descriptionAr, media, originMedia, mediaSize, note} = params;
   const langs = strings[language];
   const meidaPath = media.startsWith('/') ? media : `${uploadPath.previousEvents}/${media}`;
   const rows = [
-    [id, category, type, name, timestamp, title, description, meidaPath, originMedia, mediaSize, note],
+    [id, category, typeEn, typeAr, nameEn, nameAr, timestamp, titleEn, titleAr, descriptionEn, descriptionAr, meidaPath, originMedia, mediaSize, note],
   ];
-  let sql = sprintf("INSERT INTO `%s_%s` VALUES ? ON DUPLICATE KEY UPDATE `type` = VALUES(`type`), `name` = VALUES(`name`), `timestamp` = VALUES(`timestamp`), `title` = VALUES(`title`), `description` = VALUES(`description`), `media` = VALUES(`media`), `originMedia` = VALUES(`originMedia`), `mediaSize` = VALUES(`mediaSize`), `note` = VALUES(`note`);", scope, dbTblName.events);
+  let sql = sprintf("INSERT INTO `%s_%s` VALUES ? ON DUPLICATE KEY UPDATE `typeEn` = VALUES(`typeEn`), `typeAr` = VALUES(`typeAr`), `nameEn` = VALUES(`nameEn`), `nameAr` = VALUES(`nameAr`), `timestamp` = VALUES(`timestamp`), `titleEn` = VALUES(`titleEn`), `titleAr` = VALUES(`titleAr`), `descriptionEn` = VALUES(`descriptionEn`), `descriptionAr` = VALUES(`descriptionAr`), `media` = VALUES(`media`), `originMedia` = VALUES(`originMedia`), `mediaSize` = VALUES(`mediaSize`), `note` = VALUES(`note`);", scope, dbTblName.events);
   // dbConn.query(sql, [rows], (error, result, fields) => {
   //   if (error) {
   //     tracer.error(JSON.stringify(error));
@@ -108,9 +108,9 @@ const editProc = (req, res, next) => {
 const deleteProc = async (req, res, next) => {
   const language = req.get('language');
   const params = req.body;
-  const {id} = params;
+  const {scope, id} = params;
   const langs = strings[language];
-  let sql = sprintf("DELETE FROM `%s` WHERE `id` = '%d';", dbTblName.previousEvents, id);
+  let sql = sprintf("DELETE FROM `%s_%s` WHERE `id` = '%d';", scope, dbTblName.events, id);
   // dbConn.query(sql, null, (error, result, fields) => {
   //   if (error) {
   //     tracer.error(JSON.stringify(error));

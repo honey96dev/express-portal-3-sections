@@ -12,7 +12,8 @@ const _loadData = async (req, res, next) => {
   const params = req.body;
   const {category} = params;
   const langs = strings[language];
-  let sql = sprintf("SELECT * FROM `%s` WHERE `category` = '%s';", dbTblName.directorBoard, category);
+  let sql = sprintf("SELECT * FROM `%s`;", dbTblName.directorBoard);
+  // let sql = sprintf("SELECT * FROM `%s` WHERE `category` = '%s';", dbTblName.directorBoard, category);
 
   // dbConn.query(sql, null, (error, rows, fields) => {
   //   if (error) {
@@ -49,13 +50,13 @@ const _loadData = async (req, res, next) => {
 const _saveData = async (req, res, next, mode) => {
   const language = req.get('language');
   const params = req.body;
-  const {id, category, name, title, description, media, originMedia, mediaSize, note} = params;
+  const {id, category, nameEn, nameAr, titleEn, titleAr, descriptionEn, descriptionAr, media, originMedia, mediaSize, note} = params;
   const langs = strings[language];
   const meidaPath = media.startsWith('/') ? media : `${uploadPath.directorBoard}/${media}`;
   const rows = [
-    [id, category, name, title, description, meidaPath, originMedia, mediaSize, note],
+    [id, category, nameEn, nameAr, titleEn, titleAr, descriptionEn, descriptionAr, meidaPath, originMedia, mediaSize, note],
   ];
-  let sql = sprintf("INSERT INTO `%s` VALUES ? ON DUPLICATE KEY UPDATE `name` = VALUES(`name`), `title` = VALUES(`title`), `description` = VALUES(`description`), `media` = VALUES(`media`), `originMedia` = VALUES(`originMedia`), `mediaSize` = VALUES(`mediaSize`), `note` = VALUES(`note`);", dbTblName.directorBoard);
+  let sql = sprintf("INSERT INTO `%s` VALUES ? ON DUPLICATE KEY UPDATE `nameEn` = VALUES(`nameEn`), `nameAr` = VALUES(`nameAr`), `titleEn` = VALUES(`titleEn`), `titleAr` = VALUES(`titleAr`), `descriptionEn` = VALUES(`descriptionEn`), `descriptionAr` = VALUES(`descriptionAr`), `media` = VALUES(`media`), `originMedia` = VALUES(`originMedia`), `mediaSize` = VALUES(`mediaSize`), `note` = VALUES(`note`);", dbTblName.directorBoard);
   // dbConn.query(sql, [rows], (error, result, fields) => {
   //   if (error) {
   //     tracer.error(JSON.stringify(error));

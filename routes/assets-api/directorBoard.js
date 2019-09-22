@@ -12,7 +12,8 @@ const _loadData = async (req, res, next) => {
   const params = req.body;
   const {category} = params;
   const langs = strings[language];
-  let sql = sprintf("SELECT * FROM `%s` WHERE `category` = '%s';", dbTblName.directorBoard, category);
+  let sql = sprintf("SELECT * FROM `%s`;", dbTblName.directorBoard);
+  // let sql = sprintf("SELECT * FROM `%s` WHERE `category` = '%s';", dbTblName.directorBoard, category);
 
   // dbConn.query(sql, null, (error, rows, fields) => {
   //   if (error) {

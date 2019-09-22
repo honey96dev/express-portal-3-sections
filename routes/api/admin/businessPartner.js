@@ -49,13 +49,13 @@ const _loadData = async (req, res, next) => {
 const _saveData = async (req, res, next, mode) => {
   const language = req.get('language');
   const params = req.body;
-  const {id, category, name, title, description, media, originMedia, mediaSize, note, social1, social2, social3} = params;
+  const {id, category, nameEn, nameAr, titleEn, titleAr, descriptionEn, descriptionAr, media, originMedia, mediaSize, note, social1, social2, social3} = params;
   const langs = strings[language];
   const meidaPath = media.startsWith('/') ? media : `${uploadPath.businessPartner}/${media}`;
   const rows = [
-    [id, category, name, title, description, meidaPath, originMedia, mediaSize, social1, social2, social3, note],
+    [id, category, nameEn, nameAr, titleEn, titleAr, descriptionEn, descriptionAr, meidaPath, originMedia, mediaSize, social1, social2, social3, note],
   ];
-  let sql = sprintf("INSERT INTO `%s` VALUES ? ON DUPLICATE KEY UPDATE `name` = VALUES(`name`), `title` = VALUES(`title`), `description` = VALUES(`description`), `media` = VALUES(`media`), `originMedia` = VALUES(`originMedia`), `mediaSize` = VALUES(`mediaSize`), `social1` = VALUES(`social1`), `social2` = VALUES(`social2`), `social3` = VALUES(`social3`), `note` = VALUES(`note`);", dbTblName.businessPartner);
+  let sql = sprintf("INSERT INTO `%s` VALUES ? ON DUPLICATE KEY UPDATE `nameEn` = VALUES(`nameEn`), `nameAr` = VALUES(`nameAr`), `titleEn` = VALUES(`titleEn`), `titleAr` = VALUES(`titleAr`), `descriptionEn` = VALUES(`descriptionEn`), `descriptionAr` = VALUES(`descriptionAr`), `media` = VALUES(`media`), `originMedia` = VALUES(`originMedia`), `mediaSize` = VALUES(`mediaSize`), `social1` = VALUES(`social1`), `social2` = VALUES(`social2`), `social3` = VALUES(`social3`), `note` = VALUES(`note`);", dbTblName.businessPartner);
   // dbConn.query(sql, [rows], (error, result, fields) => {
   //   if (error) {
   //     tracer.error(JSON.stringify(error));
