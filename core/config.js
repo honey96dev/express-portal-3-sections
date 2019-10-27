@@ -39,6 +39,7 @@ const dbTblName = {
   previousEvents: 'previous_events',
   upcomingEvents: 'upcoming_events',
   humanOurServices: 'human_our_services',
+  eventJoin: 'event_join',
 };
 
 const uploadPath = {

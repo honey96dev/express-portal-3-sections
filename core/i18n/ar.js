@@ -26,4 +26,6 @@ export default {
   notUploaded: 'لم يتم الرفع',
   successfullyUploaded: 'تم الرفع بنجاح',
   successfullyPosted: 'تم النشر بنجاح',
+  successfullyJoined: 'انضم بنجاح',
+  youHaveAlreadyJoined: 'لقد انضممت بالفعل',
 };

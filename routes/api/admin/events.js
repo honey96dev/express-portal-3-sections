@@ -12,7 +12,10 @@ const _loadData = async (req, res, next) => {
   const params = req.body;
   const {scope, category, limit} = params;
   const langs = strings[language];
-  let sql = sprintf("SELECT * FROM `%s_%s` WHERE `category` = '%s' ORDER BY `timestamp` %s;", scope, dbTblName.events, category, scope === 'previous' ? 'DESC' : 'ASC');
+  const today = new Date();
+  const timestamp = sprintf('%04d-%02d-%02d', today.getFullYear(), today.getMonth() + 1, today.getDate());
+  let sql = sprintf("SELECT * FROM `%s` WHERE `category` = '%s' AND `timestamp` %s '%s' ORDER BY `timestamp` %s;", dbTblName.events, category, scope === 'previous' ? '<' : '>=', timestamp, scope === 'previous' ? 'DESC' : 'ASC');
+  // let sql = sprintf("SELECT * FROM `%s_%s` WHERE `category` = '%s' ORDER BY `timestamp` %s;", scope, dbTblName.events, category, scope === 'previous' ? 'DESC' : 'ASC');
 
   // dbConn.query(sql, null, (error, rows, fields) => {
   //   if (error) {
@@ -55,7 +58,8 @@ const _saveData = async (req, res, next, mode) => {
   const rows = [
     [id, category, typeEn, typeAr, nameEn, nameAr, timestamp, titleEn, titleAr, descriptionEn, descriptionAr, meidaPath, originMedia, mediaSize, note],
   ];
-  let sql = sprintf("INSERT INTO `%s_%s` VALUES ? ON DUPLICATE KEY UPDATE `typeEn` = VALUES(`typeEn`), `typeAr` = VALUES(`typeAr`), `nameEn` = VALUES(`nameEn`), `nameAr` = VALUES(`nameAr`), `timestamp` = VALUES(`timestamp`), `titleEn` = VALUES(`titleEn`), `titleAr` = VALUES(`titleAr`), `descriptionEn` = VALUES(`descriptionEn`), `descriptionAr` = VALUES(`descriptionAr`), `media` = VALUES(`media`), `originMedia` = VALUES(`originMedia`), `mediaSize` = VALUES(`mediaSize`), `note` = VALUES(`note`);", scope, dbTblName.events);
+  let sql = sprintf("INSERT INTO `%s` VALUES ? ON DUPLICATE KEY UPDATE `typeEn` = VALUES(`typeEn`), `typeAr` = VALUES(`typeAr`), `nameEn` = VALUES(`nameEn`), `nameAr` = VALUES(`nameAr`), `timestamp` = VALUES(`timestamp`), `titleEn` = VALUES(`titleEn`), `titleAr` = VALUES(`titleAr`), `descriptionEn` = VALUES(`descriptionEn`), `descriptionAr` = VALUES(`descriptionAr`), `media` = VALUES(`media`), `originMedia` = VALUES(`originMedia`), `mediaSize` = VALUES(`mediaSize`), `note` = VALUES(`note`);", dbTblName.events);
+  // let sql = sprintf("INSERT INTO `%s_%s` VALUES ? ON DUPLICATE KEY UPDATE `typeEn` = VALUES(`typeEn`), `typeAr` = VALUES(`typeAr`), `nameEn` = VALUES(`nameEn`), `nameAr` = VALUES(`nameAr`), `timestamp` = VALUES(`timestamp`), `titleEn` = VALUES(`titleEn`), `titleAr` = VALUES(`titleAr`), `descriptionEn` = VALUES(`descriptionEn`), `descriptionAr` = VALUES(`descriptionAr`), `media` = VALUES(`media`), `originMedia` = VALUES(`originMedia`), `mediaSize` = VALUES(`mediaSize`), `note` = VALUES(`note`);", scope, dbTblName.events);
   // dbConn.query(sql, [rows], (error, result, fields) => {
   //   if (error) {
   //     tracer.error(JSON.stringify(error));
@@ -110,7 +114,8 @@ const deleteProc = async (req, res, next) => {
   const params = req.body;
   const {scope, id} = params;
   const langs = strings[language];
-  let sql = sprintf("DELETE FROM `%s_%s` WHERE `id` = '%d';", scope, dbTblName.events, id);
+  let sql = sprintf("DELETE FROM `%s` WHERE `id` = '%d';", dbTblName.events, id);
+  // let sql = sprintf("DELETE FROM `%s_%s` WHERE `id` = '%d';", scope, dbTblName.events, id);
   // dbConn.query(sql, null, (error, result, fields) => {
   //   if (error) {
   //     tracer.error(JSON.stringify(error));
@@ -137,9 +142,62 @@ const deleteProc = async (req, res, next) => {
   }
 };
 
+const getProc = async (req, res, next) => {
+  const language = req.get('language');
+  const params = req.body;
+  const {id} = params;
+  const langs = strings[language];
+  let sql = sprintf("SELECT * FROM `%s` WHERE `id` = '%s';", dbTblName.events, id);
+
+  try {
+    let rows = await db.query(sql, null);
+    if (rows.length) {
+      rows = rows[0];
+    } else {
+      rows = {};
+    }
+    res.status(200).send({
+      result: langs.success,
+      data: rows,
+    });
+  } catch (err) {
+    tracer.error(JSON.stringify(err));
+    tracer.error(__filename);
+    res.status(200).send({
+      result: langs.error,
+      message: langs.unknownServerError,
+    });
+  }
+};
+
+const applicantsProc = async (req, res, next) => {
+  const language = req.get('language');
+  const params = req.body;
+  const {target} = params;
+  const langs = strings[language];
+  let sql = sprintf("SELECT J.jobTitle, U.* FROM `%s` J JOIN `%s` U ON U.id = J.userId WHERE `target` = '%s';", dbTblName.eventJoin, dbTblName.users, target);
+
+  try {
+    let rows = await db.query(sql, null);
+    res.status(200).send({
+      result: langs.success,
+      data: rows,
+    });
+  } catch (err) {
+    tracer.error(JSON.stringify(err));
+    tracer.error(__filename);
+    res.status(200).send({
+      result: langs.error,
+      message: langs.unknownServerError,
+    });
+  }
+};
+
 router.post('/list', listProc);
 // router.post('/add', addProc);
 router.post('/edit', editProc);
 router.post('/delete', deleteProc);
+router.post('/get', getProc);
+router.post('/applicants', applicantsProc);
 
 export default router;

@@ -26,4 +26,6 @@ export default {
   notUploaded: 'Not uploaded',
   successfullyUploaded: 'Successfully uploaded',
   successfullyPosted: 'Successfully posted',
+  successfullyJoined: 'Successfully joined',
+  youHaveAlreadyJoined: 'You have already joined',
 };

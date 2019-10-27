@@ -14,7 +14,7 @@ const uploadProc = (req, res, next) => {
   const language = req.get('language');
   const langs = strings[language];
   const {files} = req;
-  if (Object.keys(files).length == 0) {
+  if (Object.keys(files).length === 0) {
     tracer.error(JSON.stringify(error));
     tracer.error(__filename);
     return res.status(200).send({
