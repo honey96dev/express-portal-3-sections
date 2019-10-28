@@ -24,7 +24,7 @@ const _loadData = async (req, res, next) => {
     // sql = sprintf("SELECT * FROM `%s_%s` WHERE `category` = '%s' AND `timestamp` %s '%s' ORDER BY `timestamp` %s LIMIT %d;", scope, dbTblName.events, category, scope === 'previous' ? '<' : '>=', todayStr, scope === 'previous' ? 'DESC' : 'ASC', limit);
   }
 
-  tracer.info(sql);
+  // tracer.info(sql);
   try {
     let rows = await db.query(sql, null);
     res.status(200).send({
@@ -95,7 +95,6 @@ const joinEvent = async (req, res, next) => {
 
     sql = sprintf("INSERT INTO `%s`(`target`, `userId`, `jobTitle`) VALUES('%s', '%s', '%s');", dbTblName.eventJoin, target, userId, jobTitle);
     rows = await db.query(sql, null);
-    console.log(rows);
     res.status(200).send({
       result: langs.success,
       message: langs.successfullyJoined,
