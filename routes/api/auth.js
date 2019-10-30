@@ -140,7 +140,7 @@ const signUpProc = async (req, res, next) => {
   const params = req.body;
   const language = req.get('language');
   const langs = strings[language];
-  const {email, firstName, lastName, password, position, country, city, phone} = params;
+  const {email, firstName, lastName, password, company, position, country, city, phone} = params;
   const hash = myCrypto.hmacHex(password);
 
   let sql = sprintf("SELECT `email` FROM `%s` WHERE BINARY `email` = '%s';", dbTblName.users, email);
@@ -194,7 +194,7 @@ const signUpProc = async (req, res, next) => {
       return;
     }
     const newRows = [
-      [null, email, firstName, lastName, hash, position, country, city, phone, 0],
+      [null, email, firstName, lastName, hash, company, position, country, city, phone, 0],
       // [null, email, firstName, lastName, hash, position, JSON.stringify(country), city, phone, 0],
     ];
     sql = sprintf("INSERT INTO `%s` VALUES ?;", dbTblName.users, dbTblName.users);
