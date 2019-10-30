@@ -34,13 +34,13 @@ const _saveData = async (req, res, next, mode) => {
   const language = req.get('language');
   const langs = strings[language];
   const params = req.body;
-  const {id, email, firstName, lastName, password, position, country, city, phone, allow} = params;
+  const {id, email, firstName, lastName, password, company, position, country, city, phone, allow} = params;
   const hash = myCrypto.hmacHex(password ? password : '');
   const rows = [
-    [id, email, firstName, lastName, hash, position, country, city, phone, allow],
+    [id, email, firstName, lastName, hash, company, position, country, city, phone, allow],
     // [id, email, firstName, lastName, hash, position, JSON.stringify(country), city, phone, allow],
   ];
-  let sql = sprintf("INSERT INTO `%s` VALUES ? ON DUPLICATE KEY UPDATE `email` = VALUES(`email`), `firstName` = VALUES(`firstName`), `lastName` = VALUES(`lastName`), `position` = VALUES(`position`), `country` = VALUES(`country`), `phone` = VALUES(`phone`);", dbTblName.users);
+  let sql = sprintf("INSERT INTO `%s` VALUES ? ON DUPLICATE KEY UPDATE `email` = VALUES(`email`), `firstName` = VALUES(`firstName`), `lastName` = VALUES(`lastName`), `company` = VALUES(`company`), `position` = VALUES(`position`), `country` = VALUES(`country`), `phone` = VALUES(`phone`);", dbTblName.users);
 
   try {
     let result = await db.query(sql, [rows]);
