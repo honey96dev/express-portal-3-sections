@@ -40,6 +40,9 @@ const dbTblName = {
   upcomingEvents: 'upcoming_events',
   humanOurServices: 'human_our_services',
   eventJoin: 'event_join',
+  trainingSetting: 'training_setting',
+  courses: 'courses',
+  courseInstructors: 'course_instructors',
 };
 
 const uploadPath = {
@@ -50,6 +53,8 @@ const uploadPath = {
   directorBoard: '/uploads/director-board',
   previousEvents: '/uploads/previous-events',
   upcomingEvents: '/uploads/upcoming-events',
+  courses: '/uploads/courses',
+  courseInstructors: '/uploads/course-instructors',
 };
 
 export {
