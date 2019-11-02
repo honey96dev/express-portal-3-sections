@@ -4,6 +4,7 @@ import {dbTblName} from '../../core/config';
 import strings from '../../core/strings';
 import tracer from '../../core/tracer';
 import db from "../../core/db";
+import consts from "../../core/consts";
 
 const router = express.Router();
 
@@ -16,12 +17,10 @@ const _loadData = async (req, res, next) => {
   const todayStr = sprintf('%04d-%02d-%02d', today.getFullYear(), today.getMonth() + 1, today.getDate());
 
   let sql;
-  if (scope == 'upcoming') {
-    sql = sprintf("SELECT * FROM `%s` WHERE `category` = '%s' AND `timestamp` %s '%s' ORDER BY `timestamp` %s LIMIT %d;", dbTblName.events, category, scope === 'previous' ? '<' : '>=', todayStr, scope === 'previous' ? 'DESC' : 'ASC', limit);
-    // sql = sprintf("SELECT * FROM `%s_%s` WHERE `category` = '%s' AND `timestamp` %s '%s' ORDER BY `timestamp` %s LIMIT %d;", scope, dbTblName.events, category, scope === 'previous' ? '<' : '>=', todayStr, scope === 'previous' ? 'DESC' : 'ASC', limit);
-  } else {
-    sql = sprintf("SELECT * FROM `%s` WHERE `category` = '%s' AND `timestamp` %s '%s' ORDER BY `timestamp` %s LIMIT %d;", dbTblName.events, category, scope === 'previous' ? '<' : '>=', todayStr, scope === 'previous' ? 'DESC' : 'ASC', limit);
-    // sql = sprintf("SELECT * FROM `%s_%s` WHERE `category` = '%s' AND `timestamp` %s '%s' ORDER BY `timestamp` %s LIMIT %d;", scope, dbTblName.events, category, scope === 'previous' ? '<' : '>=', todayStr, scope === 'previous' ? 'DESC' : 'ASC', limit);
+  if (scope === consts.upcoming) {
+    sql = sprintf("SELECT * FROM `%s` WHERE `category` = '%s' AND `timestamp` %s '%s' ORDER BY `timestamp` %s LIMIT %d;", dbTblName.events, category, scope === consts.previous ? '<' : '>=', todayStr, scope === consts.previous ? 'DESC' : 'ASC', limit);
+  } else if (scope === consts.previous) {
+    sql = sprintf("SELECT * FROM `%s` WHERE `category` = '%s' AND `timestamp` %s '%s' ORDER BY `timestamp` %s LIMIT %d;", dbTblName.events, category, scope === consts.previous ? '<' : '>=', todayStr, scope === consts.previous ? 'DESC' : 'ASC', limit);
   }
 
   // tracer.info(sql);

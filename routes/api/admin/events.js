@@ -4,6 +4,7 @@ import {dbTblName, uploadPath} from '../../../core/config';
 import strings from '../../../core/strings';
 import tracer from '../../../core/tracer';
 import db from "../../../core/db";
+import consts from "../../../core/consts";
 
 const router = express.Router();
 
@@ -14,7 +15,7 @@ const _loadData = async (req, res, next) => {
   const langs = strings[language];
   const today = new Date();
   const timestamp = sprintf('%04d-%02d-%02d', today.getFullYear(), today.getMonth() + 1, today.getDate());
-  let sql = sprintf("SELECT E.*, COUNT(J.id) `applicants` FROM `%s` E LEFT JOIN `%s` J ON J.target = E.id WHERE E.category = '%s' AND E.timestamp %s '%s' GROUP BY E.id ORDER BY E.timestamp %s;", dbTblName.events, dbTblName.eventJoin, category, scope === 'previous' ? '<' : '>=', timestamp, scope === 'previous' ? 'DESC' : 'ASC');
+  let sql = sprintf("SELECT E.*, COUNT(J.id) `applicants` FROM `%s` E LEFT JOIN `%s` J ON J.target = E.id WHERE E.category = '%s' AND E.timestamp %s '%s' GROUP BY E.id ORDER BY E.timestamp %s;", dbTblName.events, dbTblName.eventJoin, category, scope === consts.previous ? '<' : '>=', timestamp, scope === consts.previous ? 'DESC' : 'ASC');
 
   try {
     let rows = await db.query(sql, null);

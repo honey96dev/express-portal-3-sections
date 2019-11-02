@@ -4,16 +4,23 @@ import {dbTblName} from '../../core/config';
 import db from '../../core/db';
 import strings from '../../core/strings';
 import tracer from '../../core/tracer';
+import consts from "../../core/consts";
 
 const router = express.Router();
 
 const _loadData = async (req, res, next) => {
   const language = req.get('language');
-  const params = req.body;
-  const {category} = params;
   const langs = strings[language];
-  let sql = sprintf("SELECT * FROM `%s` WHERE `category` = '%s';", dbTblName.courses, category);
-
+  const {scope, limit} = req.body;
+  const today = new Date();
+  const todayStr = sprintf('%04d-%02d-%02d', today.getFullYear(), today.getMonth() + 1, today.getDate());
+  // let sql = sprintf("SELECT * FROM `%s`;", dbTblName.courses);
+  let sql;
+  if (scope === consts.upcoming) {
+    sql = sprintf("SELECT * FROM `%s` WHERE `timestamp` %s '%s' ORDER BY `timestamp` %s LIMIT %d;", dbTblName.courses, scope === consts.previous ? '<' : '>=', todayStr, scope === consts.previous ? 'DESC' : 'ASC', limit);
+  } else if (scope === consts.previous) {
+    sql = sprintf("SELECT * FROM `%s` WHERE `timestamp` %s '%s' ORDER BY `timestamp` %s LIMIT %d;", dbTblName.courses, scope === consts.previous ? '<' : '>=', todayStr, scope === consts.previous ? 'DESC' : 'ASC', limit);
+  }
   // dbConn.query(sql, null, (error, rows, fields) => {
   //   if (error) {
   //     tracer.error(JSON.stringify(error));
