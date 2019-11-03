@@ -81,6 +81,7 @@ const cwd = process.cwd();
 const whitelist = ['http://www.eliteresources.co', 'https://www.eliteresources.co', 'http://www.eliteresources.co', 'http://www.eliteresources.co'];
 const corsOptions = {
   origin: function(origin, callback) {
+    console.log(origin);
     if (whitelist.indexOf(origin) !== -1) {
       callback(null, true)
     } else {
