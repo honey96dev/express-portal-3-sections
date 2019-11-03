@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "startDev": "node ./bin/start-webapp",
-    "startMon": "nodemon ./backend/server.development.js localhost 8080",
+    "startMon": "nodemon ./backend/server.development.js",
     "startProd": "node ./backend/server.production.js",
     "buildProd": "rimraf backend/server.production.js && webpack --mode production --config webpack.server.config.js",
     "buildDev": "rimraf backend/server.development.js && webpack --mode development --config webpack.server.config.js --watch"

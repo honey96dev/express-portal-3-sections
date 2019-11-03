@@ -106,6 +106,16 @@ if (process.env.NODE_ENV !== 'production') {
 }
 app.use(compression());
 
+app.use(function (req, res, next) {
+  if (req.secure || process.env.NODE_ENV !== 'production') {
+    // request was via https, so do no special handling
+    next();
+  } else {
+    // request was via http, so redirect to https
+    res.redirect('https://' + req.headers.host + req.url);
+  }
+});
+
 app.use(fileUpload({
   limits: {fileSize: 50 * 1024 * 1024},
 }));

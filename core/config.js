@@ -9,14 +9,15 @@ if (process.env.NODE_ENV === 'production') {
 const server = {
   isDev: false,
   port: partials.server.port,
+  sslPort: partials.server.sslPort,
   baseUrl: partials.server.baseUrl,
   name: 'Portal - 3 sections',
   description: 'Portal - 3 sections',
   author: 'Zhenlong J.',
   secret: 'portal3sections@@',
-  // sslKey: './sslcert/localhost.key',
-  // sslCert: './sslcert/localhost.cert',
-  // sslCA: './sslcert/alphasslrootcabundle.crt',
+  sslKey: './sslcert/server.key',
+  sslCert: './sslcert/server.crt',
+  sslCA: './sslcert/gd_bundle-g2-g1.crt',
   environment: process.env.NODE_ENV,
 };
 const mysql = partials.mysql;

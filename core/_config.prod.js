@@ -1,5 +1,6 @@
 const server = {
   port: 80,
+  sslPort: 443,
   baseUrl: 'http://108.160.135.63/',
 };
 const mysql = {
