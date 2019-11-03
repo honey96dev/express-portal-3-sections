@@ -78,10 +78,9 @@ const app = express();
 // // ========================================================
 
 const cwd = process.cwd();
-const whitelist = ['http://www.eliteresources.co', 'https://www.eliteresources.co', 'http://www.eliteresources.co', 'http://www.eliteresources.co'];
+const whitelist = ['http://www.eliteresources.co', 'https://www.eliteresources.co', 'http://www.eliteresources.co', 'http://www.eliteresources.co', 'http://localhost:5000'];
 const corsOptions = {
   origin: function(origin, callback) {
-    console.log(origin);
     if (whitelist.indexOf(origin) !== -1) {
       callback(null, true)
     } else {
@@ -100,8 +99,10 @@ app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 if (process.env.NODE_ENV !== 'production') {
   app.use(cors());
+  // app.use(cors(corsOptions));
 } else {
-  app.use(cors(corsOptions));
+  app.use(cors());
+  // app.use(cors(corsOptions));
 }
 app.use(compression());
 
