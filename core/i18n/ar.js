@@ -24,6 +24,7 @@ export default {
   failedDueToUnknownServerError: 'فشل بسبب خطأ غير معروف في الخادم',
   invalidParameters: 'معلمات غير صالحة',
   notUploaded: 'لم يتم الرفع',
+  notFound: 'لم يتم العثور على',
   successfullyUploaded: 'تم الرفع بنجاح',
   successfullyPosted: 'تم النشر بنجاح',
   successfullyJoined: 'انضم بنجاح',

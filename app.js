@@ -78,6 +78,16 @@ const app = express();
 // // ========================================================
 
 const cwd = process.cwd();
+const whitelist = ['http://www.eliteresources.co', 'https://www.eliteresources.co', 'http://www.eliteresources.co', 'http://www.eliteresources.co'];
+const corsOptions = {
+  origin: function(origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
+};
 
 // view engine setup
 app.set('views', path.join(cwd, 'views'));
@@ -87,7 +97,11 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
-process.env.NODE_ENV !== 'production' && app.use(cors());
+if (process.env.NODE_ENV !== 'production') {
+  app.use(cors());
+} else {
+  app.use(cors(corsOptions));
+}
 app.use(compression());
 
 app.use(fileUpload({

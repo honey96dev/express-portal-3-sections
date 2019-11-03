@@ -24,6 +24,7 @@ export default {
   failedDueToUnknownServerError: 'Failed due to unknown server error',
   invalidParameters: 'Invalid Parameters',
   notUploaded: 'Not uploaded',
+  notFound: 'Not Found',
   successfullyUploaded: 'Successfully uploaded',
   successfullyPosted: 'Successfully posted',
   successfullyJoined: 'Successfully joined',
