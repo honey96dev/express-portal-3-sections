@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "start": "node ./backend/server.production.js",
     "startDev": "node ./bin/start-webapp",
     "startMon": "nodemon ./backend/server.development.js",
     "startProd": "node ./backend/server.production.js",
