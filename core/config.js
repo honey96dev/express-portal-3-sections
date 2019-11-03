@@ -16,7 +16,7 @@ const server = {
   author: 'Zhenlong J.',
   secret: 'portal3sections@@',
   sslKey: './sslcert/server.key',
-  sslCert: './sslcert/server.crt',
+  sslCert: './sslcert/fa1df3893c62f745.crt',
   sslCA: './sslcert/gd_bundle-g2-g1.crt',
   environment: process.env.NODE_ENV,
 };
