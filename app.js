@@ -101,7 +101,7 @@ if (process.env.NODE_ENV !== 'production') {
   app.use(cors());
   // app.use(cors(corsOptions));
 } else {
-  app.use(cors());
+  // app.use(cors());
   // app.use(cors(corsOptions));
 }
 app.use(compression());
