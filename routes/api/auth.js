@@ -194,7 +194,7 @@ const signUpProc = async (req, res, next) => {
       return;
     }
     const newRows = [
-      [null, email, firstName, lastName, hash, company, position, country, city, phone, 0],
+      [null, email, firstName, lastName, hash, company, position, country, city, phone, 1],
       // [null, email, firstName, lastName, hash, position, JSON.stringify(country), city, phone, 0],
     ];
     sql = sprintf("INSERT INTO `%s` VALUES ?;", dbTblName.users, dbTblName.users);

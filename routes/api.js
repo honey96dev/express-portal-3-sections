@@ -11,6 +11,7 @@ import directorBoardRouter from './api/directorBoard';
 import eventsRouter from './api/events';
 import trainingRouter from './api/training';
 import coursesRouter from './api/courses';
+import myaccountRouter from './api/myaccount';
 
 const router = express.Router();
 
@@ -26,5 +27,6 @@ router.use('/director-board', directorBoardRouter);
 router.use('/events', eventsRouter);
 router.use('/training', trainingRouter);
 router.use('/courses', coursesRouter);
+router.use('/myaccount', myaccountRouter);
 
 export default router;
