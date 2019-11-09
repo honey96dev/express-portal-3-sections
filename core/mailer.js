@@ -2,6 +2,7 @@ import nodemailer from 'nodemailer';
 import emailTemplates from 'email-templates';
 import {server, smtp} from './config';
 import tracer from "./tracer";
+import {sprintf} from 'sprintf-js';
 
 const email = new emailTemplates({
   message: {
