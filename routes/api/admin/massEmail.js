@@ -26,7 +26,7 @@ const sendEmailProc = async (req, res, next) => {
 
     res.status(200).send({
       result: langs.success,
-      message: langs.successfullyUploaded,
+      message: langs.successfullySent,
       data: result,
     });
   } catch (err) {

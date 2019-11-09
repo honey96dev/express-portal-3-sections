@@ -1,6 +1,7 @@
 import nodemailer from 'nodemailer';
 import emailTemplates from 'email-templates';
 import {server, smtp} from './config';
+import tracer from "./tracer";
 
 const email = new emailTemplates({
   message: {
@@ -43,6 +44,8 @@ export default {
             subject: subject,
             text: message,
           };
+
+          tracer.info('mailOptions', mailOptions);
 
           transporter.sendMail(mailOptions, function(error, info){
             if (error) {
