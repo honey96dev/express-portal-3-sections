@@ -62,7 +62,7 @@ const smtp = {
   service: 'gmail',
     host: 'smtp.gmail.com',
     port: 465,
-    secure: true,
+    // secure: true,
     user: 'honey96dev@gmail.com',
     pass: 'skdmlEmail@123456',
 };
