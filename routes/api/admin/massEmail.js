@@ -25,7 +25,8 @@ const sendEmailProc = async (req, res, next) => {
     let result = await mailer.sendMassMail(to.join(','), name, subject, message);
 
     res.status(200).send({
-      result: langs.error,
+      result: langs.success,
+      message: langs.successfullyUploaded,
       data: result,
     });
   } catch (err) {

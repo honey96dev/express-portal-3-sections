@@ -29,4 +29,5 @@ export default {
   successfullyPosted: 'Successfully posted',
   successfullyJoined: 'Successfully joined',
   youHaveAlreadyJoined: 'You have already joined',
+  successfullySent: 'Successfully sent',
 };

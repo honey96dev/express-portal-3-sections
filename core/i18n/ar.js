@@ -29,4 +29,5 @@ export default {
   successfullyPosted: 'تم النشر بنجاح',
   successfullyJoined: 'انضم بنجاح',
   youHaveAlreadyJoined: 'لقد انضممت بالفعل',
+  successfullySent: 'أرسلت بنجاح',
 };
