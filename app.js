@@ -136,6 +136,10 @@ app.use('/api/admin', expressJwt({secret: session.secretAdmin})
     ]
   }));
 
+app.use('/api/contact-us', expressJwt({secret: session.secret}));
+app.use('/api/event/join', expressJwt({secret: session.secret}));
+app.use('/api/courses/join', expressJwt({secret: session.secret}));
+
 app.use('/api', apiRouter);
 app.use('/assets-api', assetsApiRouter);
 

@@ -58,12 +58,22 @@ const uploadPath = {
   courseInstructors: '/uploads/course-instructors',
 };
 
+const smtp = {
+  service: 'gmail',
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    user: 'honey96dev@gmail.com',
+    pass: 'skdmlEmail@123456',
+};
+
 export {
   server,
   mysql,
   session,
   dbTblName,
   uploadPath,
+  smtp,
 }
 
 export default {
@@ -72,4 +82,5 @@ export default {
   session,
   dbTblName,
   uploadPath,
+  smtp,
 }

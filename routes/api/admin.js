@@ -12,6 +12,7 @@ import eventsRouter from './admin/events';
 import coursesRouter from './admin/courses';
 import courseInstructorsRouter from './admin/courseInstructors';
 import trainingRouter from './admin/training';
+import massEmailRouter from './admin/massEmail';
 
 const router = express.Router();
 
@@ -28,5 +29,6 @@ router.use('/events', eventsRouter);
 router.use('/courses', coursesRouter);
 router.use('/course-instructors', courseInstructorsRouter);
 router.use('/training', trainingRouter);
+router.use('/mass-email', massEmailRouter);
 
 export default router;
