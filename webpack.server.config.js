@@ -46,7 +46,7 @@ module.exports = (env, argv) => {
       new JavaScriptObfuscator ({
         compact: true,
         controlFlowFlattening: true,
-        disableConsoleOutput: true,
+        disableConsoleOutput: false,
         renameGlobals: true,
         rotateUnicodeArray: true,
         stringArray: true,
