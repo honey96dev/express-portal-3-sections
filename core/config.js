@@ -44,6 +44,7 @@ const dbTblName = {
   trainingSetting: 'training_setting',
   courses: 'courses',
   courseInstructors: 'course_instructors',
+  courseJoin: 'course_join',
 };
 
 const uploadPath = {
@@ -58,13 +59,22 @@ const uploadPath = {
   courseInstructors: '/uploads/course-instructors',
 };
 
+// const smtp = {
+//   service: 'gmail',
+//     host: 'smtp.gmail.com',
+//     port: 465,
+//     // secure: true,
+//     user: 'honey96dev@gmail.com',
+//     pass: 'skdmlEmail@123456',
+// };
+
 const smtp = {
-  service: 'gmail',
-    host: 'smtp.gmail.com',
-    port: 465,
-    // secure: true,
-    user: 'honey96dev@gmail.com',
-    pass: 'skdmlEmail@123456',
+  // service: 'gmail',
+  host: 'smtp.eliteresources.co',
+  port: 465,
+  // secure: true,
+  user: 'pm@eliteresources.co',
+  pass: 'Theelite6*',
 };
 
 export {
