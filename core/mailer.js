@@ -39,7 +39,7 @@ export default {
           });
 
           const mailOptions = {
-            from: name,
+            from: sprintf("%s <%s>", name, smtp.user),
             to: to,
             subject: subject,
             text: message,
