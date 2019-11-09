@@ -70,7 +70,7 @@ const uploadPath = {
 
 const smtp = {
   // service: 'gmail',
-  host: 'smtp.eliteresources.co',
+  host: 'email.eliteresources.co',
   port: 465,
   // secure: true,
   user: 'pm@eliteresources.co',
