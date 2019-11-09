@@ -70,8 +70,9 @@ const uploadPath = {
 
 const smtp = {
   // service: 'gmail',
-  host: 'email.eliteresources.co',
-  port: 465,
+  host: 'smtp.office365.com',
+  secureConnection: true,
+  port: 587,
   // secure: true,
   user: 'pm@eliteresources.co',
   pass: 'Theelite6*',
