@@ -5,6 +5,7 @@ import db from "../../../core/db";
 import strings from '../../../core/strings';
 import tracer from '../../../core/tracer';
 import consts from "../../../core/consts";
+import myCrypto from "../../../core/myCrypto";
 
 const router = express.Router();
 
@@ -17,8 +18,8 @@ const _loadData = async (req, res, next) => {
   const today = new Date();
   const timestamp = sprintf('%04d-%02d-%02d', today.getFullYear(), today.getMonth() + 1, today.getDate());
 
-  let sql = sprintf("SELECT C.*, COUNT(I.id) `instructors` FROM `%s` C LEFT JOIN `%s` I ON I.targetId = C.id WHERE C.category = '%s' AND C.timestamp %s '%s' GROUP BY C.id ORDER BY C.timestamp %s;", dbTblName.courses, dbTblName.courseInstructors, category, scope === consts.previous ? '<' : '>=', timestamp, scope === consts.previous ? 'DESC' : 'ASC');
-
+  let sql = sprintf("SELECT C.*, COUNT(J.id) `applicants` FROM (SELECT C.*, COUNT(I.id) `instructors` FROM `%s` C LEFT JOIN `%s` I ON I.targetId = C.id GROUP BY C.id) `C` LEFT JOIN `%s` J ON J.target = C.id WHERE C.category = '%s' AND C.timestamp %s '%s' GROUP BY C.id ORDER BY C.timestamp %s;", dbTblName.courses, dbTblName.courseInstructors, dbTblName.courseJoin, category, scope === consts.previous ? '<' : '>=', timestamp, scope === consts.previous ? 'DESC' : 'ASC');
+  
   try {
     let rows = await db.query(sql, null);
     res.status(200).send({
@@ -128,10 +129,61 @@ const getProc = async (req, res, next) => {
   }
 };
 
+const applicantsProc = async (req, res, next) => {
+  const language = req.get('language');
+  const params = req.body;
+  const {target} = params;
+  const langs = strings[language];
+  let sql = sprintf("SELECT J.id, J.jobTitle, J.attend, U.email, U.firstName, U.lastName, U.company, U.position, U.country, U.city, U.phone, U.allow FROM `%s` J JOIN `%s` U ON U.id = J.userId WHERE `target` = '%s';", dbTblName.courseJoin, dbTblName.users, target);
+
+  try {
+    let rows = await db.query(sql, null);
+
+    for (let row of rows) {
+      row['hash'] = myCrypto.hmacHex(row['id'] + '@@' + row['email']);
+    }
+    res.status(200).send({
+      result: langs.success,
+      data: rows,
+    });
+  } catch (err) {
+    tracer.error(JSON.stringify(err));
+    tracer.error(__filename);
+    res.status(200).send({
+      result: langs.error,
+      message: langs.unknownServerError,
+    });
+  }
+};
+
+const attendProc = async (req, res, next) => {
+
+  const language = req.get('language');
+  const params = req.body;
+  const {id, attend} = params;
+  const langs = strings[language];
+  let sql = sprintf("UPDATE `%s` SET `attend` = '%s' WHERE `id` = '%s';", dbTblName.courseJoin, attend, id);
+
+  try {
+    await db.query(sql, null);
+
+    await applicantsProc(req, res, next);
+  } catch (err) {
+    tracer.error(JSON.stringify(err));
+    tracer.error(__filename);
+    res.status(200).send({
+      result: langs.error,
+      message: langs.unknownServerError,
+    });
+  }
+};
+
 router.post('/list', listProc);
 // router.post('/add', addProc);
 router.post('/edit', editProc);
 router.post('/delete', deleteProc);
 router.post('/get', getProc);
+router.post('/applicants', applicantsProc);
+router.post('/attend', attendProc);
 
 export default router;

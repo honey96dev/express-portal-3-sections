@@ -5,6 +5,7 @@ import strings from '../../../core/strings';
 import tracer from '../../../core/tracer';
 import db from "../../../core/db";
 import consts from "../../../core/consts";
+import myCrypto from "../../../core/myCrypto";
 
 const router = express.Router();
 
@@ -136,15 +137,9 @@ const applicantsProc = async (req, res, next) => {
   try {
     let rows = await db.query(sql, null);
 
-    // sql = sprintf("SELECT * FROM `%s` WHERE `id` = '%s';", dbTblName.events, target);
-    // let events = await db.query(sql, null);s
-    //
-    // const today = new Date();
-    // const timestamp = sprintf("%04d-%02d-%02d", today.getFullYear(), today.getMonth() + 1, today.getDate());
-    // const isPrevious = events[0]['timestamp'] < timestamp;
-    // for (let row of rows) {
-    //   row['isPrevious'] = isPrevious;
-    // }
+    for (let row of rows) {
+      row['hash'] = myCrypto.hmacHex(row['id'] + '@@' + row['email']);
+    }
     res.status(200).send({
       result: langs.success,
       data: rows,

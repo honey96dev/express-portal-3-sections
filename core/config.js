@@ -45,6 +45,7 @@ const dbTblName = {
   courses: 'courses',
   courseInstructors: 'course_instructors',
   courseJoin: 'course_join',
+  prevSponsors: 'prev_sponsors',
 };
 
 const uploadPath = {
@@ -57,6 +58,7 @@ const uploadPath = {
   upcomingEvents: '/uploads/upcoming-events',
   courses: '/uploads/courses',
   courseInstructors: '/uploads/course-instructors',
+  prevSponsors: '/uploads/prev-sponsors',
 };
 
 // const smtp = {
