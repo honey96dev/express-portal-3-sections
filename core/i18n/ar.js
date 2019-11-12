@@ -27,7 +27,7 @@ export default {
   notFound: 'لم يتم العثور على',
   successfullyUploaded: 'تم الرفع بنجاح',
   successfullyPosted: 'تم النشر بنجاح',
-  successfullyJoined: 'انضم بنجاح',
+  successfullyJoined: 'تم التسجيل بنجاح',
   youHaveAlreadyJoined: 'لقد انضممت بالفعل',
   successfullySent: 'أرسلت بنجاح',
 };
