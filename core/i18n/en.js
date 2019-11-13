@@ -30,4 +30,6 @@ export default {
   successfullyJoined: 'Successfully joined',
   youHaveAlreadyJoined: 'You have already joined',
   successfullySent: 'Successfully sent',
+  invalidHash: 'Your signature is invalid',
+  invalidUser: 'Your information is invalid',
 };

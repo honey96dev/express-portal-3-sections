@@ -132,13 +132,13 @@ const applicantsProc = async (req, res, next) => {
   const params = req.body;
   const {target} = params;
   const langs = strings[language];
-  let sql = sprintf("SELECT J.id, J.jobTitle, J.attend, U.email, U.firstName, U.lastName, U.company, U.position, U.country, U.city, U.phone, U.allow FROM `%s` J JOIN `%s` U ON U.id = J.userId WHERE `target` = '%s';", dbTblName.eventJoin, dbTblName.users, target);
+  let sql = sprintf("SELECT J.id, J.jobTitle, J.attend, U.id `userId`, U.email, U.firstName, U.lastName, U.company, U.position, U.country, U.city, U.phone, U.allow FROM `%s` J JOIN `%s` U ON U.id = J.userId WHERE `target` = '%s';", dbTblName.eventJoin, dbTblName.users, target);
 
   try {
     let rows = await db.query(sql, null);
 
     for (let row of rows) {
-      row['hash'] = myCrypto.hmacHex(consts.event + '@@' + row['id'] + '@@' + row['email']);
+      row['hash'] = myCrypto.hmacHex(consts.event + '@@' + row['id'] + '@@' + row['userId'] + '@@' + row['email']);
     }
     res.status(200).send({
       result: langs.success,

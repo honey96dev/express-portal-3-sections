@@ -14,6 +14,7 @@ import courseInstructorsRouter from './admin/courseInstructors';
 import prevSponsorsRouter from './admin/prevSponors';
 import trainingRouter from './admin/training';
 import massEmailRouter from './admin/massEmail';
+import qrScannerRouter from './admin/qrScanner';
 
 const router = express.Router();
 
@@ -32,5 +33,6 @@ router.use('/course-instructors', courseInstructorsRouter);
 router.use('/prev-sponsors', prevSponsorsRouter);
 router.use('/training', trainingRouter);
 router.use('/mass-email', massEmailRouter);
+router.use('/qr-scanner', qrScannerRouter);
 
 export default router;
