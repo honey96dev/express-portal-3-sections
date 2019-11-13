@@ -63,17 +63,18 @@ const postProc = async (req, res, next) => {
     return;
   }
 
-  let sql = sprintf("UPDATE `%s` SET `attend` = '%d' WHERE `id` = '%s';", category === 'event' ? dbTblName.eventJoin : dbTblName.courseJoin, 1, id);
+  let sql = sprintf("SELECT * FROM `%s` WHERE `id` = '%d';", category === 'event' ? dbTblName.eventJoin : dbTblName.courseJoin, id);
 
   try {
     let rows = await db.query(sql, null);
     if (rows.length === 0) {
       res.status(200).send({
         result: langs.error,
-        message: langs.invalidUser,
+        message: langs.notRegistered,
       });
       return;
     }
+    sql = sprintf("UPDATE `%s` SET `attend` = '%d' WHERE `id` = '%s';", category === 'event' ? dbTblName.eventJoin : dbTblName.courseJoin, 1, id);
     res.status(200).send({
       result: langs.success,
       message: langs.successfullySaved,

@@ -32,4 +32,5 @@ export default {
   successfullySent: 'Successfully sent',
   invalidHash: 'Your signature is invalid',
   invalidUser: 'Your information is invalid',
+  notRegistered: 'You are not registered',
 };
