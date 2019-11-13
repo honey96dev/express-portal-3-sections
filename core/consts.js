@@ -5,6 +5,8 @@ const consts = {
   upcoming: 'upcoming',
   previous: 'previous',
   annual: 'annual',
+  event: 'event',
+  course: 'course',
 };
 
 export {

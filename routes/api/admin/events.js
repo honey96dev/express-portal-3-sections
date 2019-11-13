@@ -138,7 +138,7 @@ const applicantsProc = async (req, res, next) => {
     let rows = await db.query(sql, null);
 
     for (let row of rows) {
-      row['hash'] = myCrypto.hmacHex(row['id'] + '@@' + row['email']);
+      row['hash'] = myCrypto.hmacHex(consts.event + '@@' + row['id'] + '@@' + row['email']);
     }
     res.status(200).send({
       result: langs.success,
