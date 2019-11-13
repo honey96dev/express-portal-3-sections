@@ -70,6 +70,16 @@ const postProc = async (req, res, next) => {
     if (rows.length === 0) {
       res.status(200).send({
         result: langs.error,
+        message: langs.eventIsNotExist,
+      });
+      return;
+    }
+
+    sql = sprintf("SELECT * FROM `%s` WHERE `id` = '%d' AND `userId` = '%d';", category === 'event' ? dbTblName.eventJoin : dbTblName.courseJoin, id, userId);
+    rows = await db.query(sql, null);
+    if (rows.length === 0) {
+      res.status(200).send({
+        result: langs.error,
         message: langs.notRegistered,
       });
       return;

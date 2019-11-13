@@ -32,5 +32,6 @@ export default {
   successfullySent: 'أرسلت بنجاح',
   invalidHash: 'توقيعك غير صالح',
   invalidUser: 'معلوماتك غير صالحة',
+  eventIsNotExist: 'الحدث غير موجود',
   notRegistered: 'انت لم تسجل',
 };
