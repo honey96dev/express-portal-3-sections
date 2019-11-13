@@ -75,6 +75,7 @@ const postProc = async (req, res, next) => {
       return;
     }
     sql = sprintf("UPDATE `%s` SET `attend` = '%d' WHERE `id` = '%s';", category === 'event' ? dbTblName.eventJoin : dbTblName.courseJoin, 1, id);
+    await db.query(sql, null);
     res.status(200).send({
       result: langs.success,
       message: langs.successfullySaved,
