@@ -93,10 +93,43 @@ const _loadData = async (req, res, next) => {
   }
 };
 
-const listProc = (req, res, next) => {
-  _loadData(req, res, next);
+const listProc = async (req, res, next) => {
+  await _loadData(req, res, next);
+};
+
+const getProc = async (req, res, next) => {
+  const language = req.get('language');
+  const params = req.body;
+  const {id} = params;
+  const langs = strings[language];
+  let sql = sprintf("SELECT * FROM `%s` WHERE `id` = '%s';", dbTblName.ourClients, id);
+
+  try {
+    let rows = await db.query(sql, null);
+
+    if (rows.length > 0) {
+      res.status(200).send({
+        result: langs.success,
+        data: rows[0],
+      });
+    } else {
+      res.status(200).send({
+        result: langs.error,
+        message: langs.notFound,
+      });
+    }
+  } catch (err) {
+    tracer.error(JSON.stringify(err));
+    tracer.error(__filename);
+    res.status(200).send({
+      result: langs.error,
+      message: langs.unknownServerError,
+      err,
+    });
+  }
 };
 
 router.post('/list', listProc);
+router.post('/get', getProc);
 
 export default router;

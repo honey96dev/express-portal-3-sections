@@ -12,7 +12,7 @@ const _loadData = async (req, res, next) => {
   const params = req.body;
   const {category} = params;
   const langs = strings[language];
-  let sql = sprintf("SELECT * FROM `%s` WHERE `category` = '%s';", dbTblName.ourClients, category);
+  let sql = sprintf("SELECT * FROM `%s` WHERE `category` = '%s' ORDER BY `timestamp` DESC;", dbTblName.ourClients, category);
 
   // dbConn.query(sql, null, (error, rows, fields) => {
   //   if (error) {
@@ -49,13 +49,15 @@ const _loadData = async (req, res, next) => {
 const _saveData = async (req, res, next, mode) => {
   const language = req.get('language');
   const params = req.body;
-  const {id, category, timestamp, nameEn, nameAr, photo, photoOriginMedia, photoMediaSize, stars, title, feedbackEn, feedbackAr, files, filesOriginMedia, filesMediaSize, note} = params;
+  const {id, category, timestamp, nameEn, nameAr, photo, photoOriginMedia, photoMediaSize, titleEn, titleAr, descriptionEn, descriptionAr, durationEn, durationAr, scopeEn, scopeAr, deliverableEn, deliverableAr,note,} = params;
+  // const {id, category, timestamp, nameEn, nameAr, photo, photoOriginMedia, photoMediaSize, stars, title, feedbackEn, feedbackAr, files, filesOriginMedia, filesMediaSize, note} = params;
   const langs = strings[language];
   const photoMediaPath = photo.startsWith('/') ? photo : `${uploadPath.ourClients}/${photo}`;
   const rows = [
-    [id, category, timestamp, nameEn, nameAr, photoMediaPath, photoOriginMedia, photoMediaSize, stars, title, feedbackEn, feedbackAr, files, filesOriginMedia, filesMediaSize, note],
+    [id, category, timestamp, nameEn, nameAr, photoMediaPath, photoOriginMedia, photoMediaSize, titleEn, titleAr, descriptionEn, descriptionAr, durationEn, durationAr, scopeEn, scopeAr, deliverableEn, deliverableAr,note,],
+    // [id, category, timestamp, nameEn, nameAr, photoMediaPath, photoOriginMedia, photoMediaSize, stars, title, feedbackEn, feedbackAr, files, filesOriginMedia, filesMediaSize, note],
   ];
-  let sql = sprintf("INSERT INTO `%s` VALUES ? ON DUPLICATE KEY UPDATE `timestamp` = VALUES(`timestamp`), `nameEn` = VALUES(`nameEn`), `nameAr` = VALUES(`nameAr`), `photo` = VALUES(`photo`), `photoOriginMedia` = VALUES(`photoOriginMedia`), `photoMediaSize` = VALUES(`photoMediaSize`), `stars` = VALUES(`stars`), `title` = VALUES(`title`), `feedbackEn` = VALUES(`feedbackEn`), `feedbackAr` = VALUES(`feedbackAr`), `files` = VALUES(`files`), `filesOriginMedia` = VALUES(`filesOriginMedia`), `filesMediaSize` = VALUES(`filesMediaSize`), `note` = VALUES(`note`);", dbTblName.ourClients);
+  let sql = sprintf("INSERT INTO `%s` VALUES ? ON DUPLICATE KEY UPDATE `timestamp` = VALUES(`timestamp`), `nameEn` = VALUES(`nameEn`), `nameAr` = VALUES(`nameAr`), `photo` = VALUES(`photo`), `photoOriginMedia` = VALUES(`photoOriginMedia`), `photoMediaSize` = VALUES(`photoMediaSize`), `titleEn` = VALUES(`titleEn`), `titleAr` = VALUES(`titleAr`), `descriptionEn` = VALUES(`descriptionEn`), `descriptionAr` = VALUES(`descriptionAr`), `durationEn` = VALUES(`durationEn`), `durationAr` = VALUES(`durationAr`), `scopeEn` = VALUES(`scopeEn`), `scopeAr` = VALUES(`scopeAr`), `deliverableEn` = VALUES(`deliverableEn`), `deliverableAr` = VALUES(`deliverableAr`), `note` = VALUES(`note`);", dbTblName.ourClients);
   // dbConn.query(sql, [rows], (error, result, fields) => {
   //   if (error) {
   //     tracer.error(JSON.stringify(error));
