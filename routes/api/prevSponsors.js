@@ -18,9 +18,9 @@ const _loadData = async (req, res, next) => {
 
   let sql;
   if (scope === consts.upcoming) {
-    sql = sprintf("SELECT * FROM `%s` WHERE `category` = '%s' AND `timestamp` %s '%s' ORDER BY `timestamp` %s LIMIT %d;", dbTblName.prevSponsors, category, scope === consts.previous ? '<' : '>=', todayStr, scope === consts.previous ? 'DESC' : 'ASC', limit);
+    sql = sprintf("SELECT * FROM `%s` WHERE `category` = '%s' ORDER BY `timestamp` %s LIMIT %d;", dbTblName.prevSponsors, category, scope === consts.previous ? 'DESC' : 'ASC', limit);
   } else if (scope === consts.previous) {
-    sql = sprintf("SELECT * FROM `%s` WHERE `category` = '%s' AND `timestamp` %s '%s' ORDER BY `timestamp` %s LIMIT %d;", dbTblName.prevSponsors, category, scope === consts.previous ? '<' : '>=', todayStr, scope === consts.previous ? 'DESC' : 'ASC', limit);
+    sql = sprintf("SELECT * FROM `%s` WHERE `category` = '%s' ORDER BY `timestamp` %s LIMIT %d;", dbTblName.prevSponsors, category, scope === consts.previous ? 'DESC' : 'ASC', limit);
   }
 
   try {

@@ -136,7 +136,12 @@ app.use('/api/admin', expressJwt({secret: session.secretAdmin})
     ]
   }));
 
-app.use('/api/contact-us', expressJwt({secret: session.secret}));
+app.use('/api/contact-us', expressJwt({secret: session.secret})
+  .unless({
+    path: [
+      '/api/contact-us/post'
+    ],
+  }));
 app.use('/api/event/join', expressJwt({secret: session.secret}));
 app.use('/api/courses/join', expressJwt({secret: session.secret}));
 
