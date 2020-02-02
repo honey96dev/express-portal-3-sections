@@ -17,7 +17,7 @@ const email = new emailTemplates({
 });
 
 export default {
-  sendContactUsMail: (params) => {
+  sendContactUsMail: async (params) => {
     return new Promise((resolve, reject) => {
       email.render('../email-templates/contact-us/html.pug', params)
         .then(html => {
@@ -55,7 +55,7 @@ export default {
         .catch(reject);
     });
   },
-  sendMassMail: (to, name, subject, message) => {
+  sendMassMail: async (to, name, subject, message) => {
     return new Promise((resolve, reject) => {
       // email.render('../email_templates/email_verify/html.pug', {
       //   name: name,
@@ -97,13 +97,9 @@ export default {
     //     .catch(reject);
     });
   },
-  sendCourseJoinMail: (to, name, subject) => {
+  sendCourseJoinMail: async (to) => {
     return new Promise((resolve, reject) => {
-      email.render('../email_templates/email_verify/html.pug', {
-        name: name,
-        subject,
-        message,
-      })
+      email.render('../email-templates/course-join/html.pug', {})
         .then((html) => {
           let transporter = nodemailer.createTransport({
             // service: smtp.service,
@@ -120,9 +116,9 @@ export default {
           });
 
           const mailOptions = {
-            from: sprintf("%s <%s>", name, smtp.user),
+            from: sprintf("%s <%s>", 'PM', smtp.user),
             to: to,
-            subject: subject,
+            subject: 'eliteresources.co',
             html: html,
           };
 
