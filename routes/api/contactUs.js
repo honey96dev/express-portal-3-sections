@@ -4,6 +4,7 @@ import db from '../../core/db';
 import {dbTblName} from "../../core/config";
 import tracer from "../../core/tracer";
 import strings from "../../core/strings";
+import mailer from "../../core/mailer";
 
 const router = express.Router();
 
@@ -33,6 +34,7 @@ const postProc = async (req, res, next) => {
   // });
   try {
     await db.query(sql, [rows]);
+    await mailer.sendContactUsMail( {name, email, subject, message});
     res.status(200).send({
       result: langs.success,
       message: langs.successfullyPosted,
