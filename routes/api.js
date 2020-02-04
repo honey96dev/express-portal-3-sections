@@ -13,6 +13,7 @@ import trainingRouter from './api/training';
 import coursesRouter from './api/courses';
 import prevSponsorsRouter from './api/prevSponsors';
 import myaccountRouter from './api/myaccount';
+import aboutUsRouter from './api/aboutUs';
 
 const router = express.Router();
 
@@ -30,5 +31,6 @@ router.use('/training', trainingRouter);
 router.use('/courses', coursesRouter);
 router.use('/prev-sponsors', prevSponsorsRouter);
 router.use('/myaccount', myaccountRouter);
+router.use('/about-us', aboutUsRouter);
 
 export default router;

@@ -5,6 +5,7 @@ import strings from '../../core/strings';
 import tracer from '../../core/tracer';
 import db from "../../core/db";
 import consts from "../../core/consts";
+import mailer from "../../core/mailer";
 
 const router = express.Router();
 
@@ -77,7 +78,7 @@ const getProc = async (req, res, next) => {
 const joinEvent = async (req, res, next) => {
   const language = req.get('language');
   const params = req.body;
-  const {target, userId, jobTitle} = params;
+  const {target, userId, jobTitle, email} = params;
   const langs = strings[language];
 
   let sql = sprintf("SELECT `id` FROM `%s` WHERE `target` = '%s' AND `userId` = '%s';", dbTblName.eventJoin, target, userId);
@@ -92,6 +93,7 @@ const joinEvent = async (req, res, next) => {
       return;
     }
 
+    await mailer.sendEventJoinMail(email);
     sql = sprintf("INSERT INTO `%s`(`target`, `userId`, `jobTitle`) VALUES('%s', '%s', '%s');", dbTblName.eventJoin, target, userId, jobTitle);
     rows = await db.query(sql, null);
     res.status(200).send({
