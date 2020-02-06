@@ -36,6 +36,33 @@ const _loadData = async (req, res, next) => {
   }
 };
 
+const _loadApplicants = async (req, res, next) => {
+  const language = req.get('language');
+  const params = req.body;
+  const {target} = params;
+  const langs = strings[language];
+  let sql = sprintf("SELECT J.id, J.jobTitle, J.paid, J.attend, U.id `userId`, U.email, U.firstName, U.lastName, U.company, U.position, U.country, U.city, U.phone, U.allow FROM `%s` J JOIN `%s` U ON U.id = J.userId WHERE `target` = '%s';", dbTblName.courseJoin, dbTblName.users, target);
+
+  try {
+    let rows = await db.query(sql, null);
+
+    for (let row of rows) {
+      row['hash'] = myCrypto.hmacHex(consts.course + '@@' + row['id'] + '@@' + row['userId'] + '@@' + row['email']);
+    }
+    res.status(200).send({
+      result: langs.success,
+      data: rows,
+    });
+  } catch (err) {
+    tracer.error(JSON.stringify(err));
+    tracer.error(__filename);
+    res.status(200).send({
+      result: langs.error,
+      message: langs.unknownServerError,
+    });
+  }
+};
+
 const _saveData = async (req, res, next, mode) => {
   const language = req.get('language');
   const params = req.body;
@@ -130,22 +157,40 @@ const getProc = async (req, res, next) => {
 };
 
 const applicantsProc = async (req, res, next) => {
+  _loadApplicants(req, res, next);
+};
+
+const deleteApplicantProc = async (req, res, next) => {
   const language = req.get('language');
   const params = req.body;
-  const {target} = params;
+  const {id} = params;
   const langs = strings[language];
-  let sql = sprintf("SELECT J.id, J.jobTitle, J.attend, U.id `userId`, U.email, U.firstName, U.lastName, U.company, U.position, U.country, U.city, U.phone, U.allow FROM `%s` J JOIN `%s` U ON U.id = J.userId WHERE `target` = '%s';", dbTblName.courseJoin, dbTblName.users, target);
+  let sql = sprintf("DELETE FROM `%s` WHERE `id` = '%d';", dbTblName.courseJoin, id);
 
   try {
-    let rows = await db.query(sql, null);
-
-    for (let row of rows) {
-      row['hash'] = myCrypto.hmacHex(consts.course + '@@' + row['id'] + '@@' + row['userId'] + '@@' + row['email']);
-    }
+    await db.query(sql, null);
+    _loadApplicants(req, res, next);
+  } catch (err) {
+    tracer.error(JSON.stringify(err));
+    tracer.error(__filename);
     res.status(200).send({
-      result: langs.success,
-      data: rows,
+      result: langs.error,
+      message: langs.unknownServerError,
     });
+  }
+};
+
+const paidProc = async (req, res, next) => {
+  const language = req.get('language');
+  const params = req.body;
+  const {id, paid} = params;
+  const langs = strings[language];
+  let sql = sprintf("UPDATE `%s` SET `paid` = '%s' WHERE `id` = '%s';", dbTblName.courseJoin, paid, id);
+
+  try {
+    await db.query(sql, null);
+
+    await _loadApplicants(req, res, next);
   } catch (err) {
     tracer.error(JSON.stringify(err));
     tracer.error(__filename);
@@ -184,6 +229,8 @@ router.post('/edit', editProc);
 router.post('/delete', deleteProc);
 router.post('/get', getProc);
 router.post('/applicants', applicantsProc);
+router.post('/delete-applicant', deleteApplicantProc);
+router.post('/paid', paidProc);
 router.post('/attend', attendProc);
 
 export default router;
