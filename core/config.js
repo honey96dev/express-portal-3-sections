@@ -48,6 +48,7 @@ const dbTblName = {
   prevSponsors: 'prev_sponsors',
   aboutUs: 'about_us',
   eventPhotos: 'event_photos',
+  resetPasswordTokens: 'reset_password_tokens',
 };
 
 const uploadPath = {

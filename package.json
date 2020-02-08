@@ -36,6 +36,7 @@
     "@babel/polyfill": "^7.6.0",
     "@babel/preset-env": "^7.5.5",
     "@babel/register": "^7.5.5",
+    "app-module-path": "^2.2.0",
     "babel-loader": "^8.0.6",
     "nodemon": "^1.19.2",
     "rimraf": "^3.0.0",

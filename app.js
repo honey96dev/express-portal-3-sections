@@ -9,9 +9,9 @@ import compression from 'compression';
 import fileUpload from 'express-fileupload';
 // import Payments from "node-payments";
 
-import {server, session} from './core/config';
-import apiRouter from './routes/api';
-import assetsApiRouter from './routes/assets-api';
+import {server, session} from 'core/config';
+import apiRouter from 'routes/api';
+import assetsApiRouter from 'routes/assets-api';
 
 const app = express();
 

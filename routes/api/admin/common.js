@@ -3,8 +3,8 @@ import {sprintf} from 'sprintf-js';
 import uuid from 'uuid';
 import path from 'path';
 import mkdirp from 'mkdirp';
-import strings from '../../../core/strings';
-import tracer from '../../../core/tracer';
+import strings from 'core/strings';
+import tracer from 'core/tracer';
 
 const router = express.Router();
 

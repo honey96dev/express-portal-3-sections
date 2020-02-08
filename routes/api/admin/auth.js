@@ -1,11 +1,11 @@
 import express from 'express';
 import jwt from 'jsonwebtoken';
 import {sprintf} from 'sprintf-js';
-import {dbTblName, session} from '../../../core/config';
-import db from '../../../core/db';
-import myCrypto from '../../../core/myCrypto';
-import strings from '../../../core/strings';
-import tracer from "../../../core/tracer";
+import {dbTblName, session} from 'core/config';
+import db from 'core/db';
+import myCrypto from 'core/myCrypto';
+import strings from 'core/strings';
+import tracer from "core/tracer";
 
 const router = express.Router();
 

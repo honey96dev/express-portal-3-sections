@@ -1,9 +1,9 @@
 import express from 'express';
 import {sprintf} from 'sprintf-js';
-import {dbTblName} from '../../core/config';
-import db from '../../core/db';
-import strings from '../../core/strings';
-import tracer from '../../core/tracer';
+import {dbTblName} from 'core/config';
+import db from 'core/db';
+import strings from 'core/strings';
+import tracer from 'core/tracer';
 
 const router = express.Router();
 

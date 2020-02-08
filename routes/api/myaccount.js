@@ -1,10 +1,10 @@
 import express from 'express';
 import {sprintf} from 'sprintf-js';
-import db from '../../core/db';
-import {dbTblName} from "../../core/config";
-import tracer from "../../core/tracer";
-import strings from "../../core/strings";
-import myCrypto from "../../core/myCrypto";
+import db from 'core/db';
+import {dbTblName} from "core/config";
+import tracer from "core/tracer";
+import strings from "core/strings";
+import myCrypto from "core/myCrypto";
 
 const router = express.Router();
 
