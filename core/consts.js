@@ -18,7 +18,7 @@ export const tokenStatus = {
   EMAIL_NOT_FOUND: 5,
 };
 
-export const resetPasswordUri = "auth/reset-password";
+export const resetPasswordUri = "auth/reset-pass";
 
 export default {
   consts,
