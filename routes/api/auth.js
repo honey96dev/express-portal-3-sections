@@ -275,7 +275,7 @@ const sendForgotPasswordMailProc = async (req, res, next) => {
     const user = rows[0];
     const name = `${user.firstName} ${user.lastName}`;
     const url = `${server.baseUrl}${resetPasswordUri}/${email}/${token}`;
-    // await mailer.sendForgotPasswordMail({email, name, url, subject: langs.forgotPassword});
+    await mailer.sendForgotPasswordMail({email, name, url, subject: langs.forgotPassword});
 
     sql = sprintf("INSERT INTO `%s` VALUES ? ON DUPLICATE KEY UPDATE `timestamp` = VALUES(`timestamp`), `token` = VALUES(`token`), `expire` = VALUES(`expire`), `used` = VALUES(`used`);", dbTblName.resetPasswordTokens);
 
