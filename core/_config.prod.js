@@ -1,7 +1,7 @@
 const server = {
   port: 80,
   sslPort: 443,
-  baseUrl: 'https://eliteresources.so/',
+  baseUrl: 'https://eliteresources.co/',
 };
 const mysql = {
   connectionLimit: 10,
