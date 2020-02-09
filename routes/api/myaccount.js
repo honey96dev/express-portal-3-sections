@@ -1,5 +1,6 @@
 import express from 'express';
 import {sprintf} from 'sprintf-js';
+import dateformat from 'dateformat';
 import db from 'core/db';
 import {dbTblName} from "core/config";
 import tracer from "core/tracer";
@@ -11,13 +12,16 @@ const router = express.Router();
 const saveProc = async (req, res, next) => {
   const language = req.get('language');
   const langs = strings[language];
-  const {id, firstName, lastName, company, position, country, city, email, phone} = req.body;
-  const rows = [
-    [id, email, firstName, lastName, '', company, position, country, city, phone, 1],
+  let {id, email, username, firstName, fatherName, lastName, gender, birthday, jobTitle, sector, company, city, countryCode, phone} = req.body;
+  birthday = !!birthday ? birthday.substr(0, 10) : (new Date().toISOString()).substr(0, 10);
+  const today = new Date();
+  const date = dateformat(today, "yyyy-mm-dd");
+  const newRows = [
+    [id, email, "", username, firstName, fatherName, lastName, gender, birthday, jobTitle, sector, company, city, countryCode, phone, 0, 0, date, date, "", ""],
   ];
-  let sql = sprintf("INSERT INTO `%s` VALUES ? ON DUPLICATE KEY UPDATE `firstName` = VALUES(`firstName`), `lastName` = VALUES(`lastName`), `company` = VALUES(`company`), `position` = VALUES(`position`), `country` = VALUES(`country`), `city` = VALUES(`city`), `email` = VALUES(`email`), `phone` = VALUES(`phone`);", dbTblName.users);
+  let sql = sprintf("INSERT INTO `%s` VALUES ? ON DUPLICATE KEY UPDATE `email` = VALUES(`email`), `username` = VALUES(`username`), `firstName` = VALUES(`firstName`), `fatherName` = VALUES(`fatherName`), `lastName` = VALUES(`lastName`), `gender` = VALUES(`gender`), `birthday` = VALUES(`birthday`), `jobTitle` = VALUES(`jobTitle`), `sector` = VALUES(`sector`), `company` = VALUES(`company`), `city` = VALUES(`city`), `countryCode` = VALUES(`countryCode`), `phone` = VALUES(`phone`);", dbTblName.users);
   try {
-    await db.query(sql, [rows]);
+    await db.query(sql, [newRows]);
     res.status(200).send({
       result: langs.success,
       message: langs.successfullySaved,

@@ -1,5 +1,6 @@
 import express from 'express';
 import {sprintf} from 'sprintf-js';
+import dateformat from "dateformat";
 import {dbTblName, uploadPath} from 'core/config';
 import db from "core/db";
 import strings from 'core/strings';
@@ -16,6 +17,10 @@ const _loadData = async (req, res, next) => {
 
   try {
     let rows = await db.query(sql, null);
+    for (let row of rows) {
+      row["birthday2"] = !!row["birthday"] ? row["birthday"].toISOString().substr(0, 10) : "";
+      row["gender2"] = langs[row["gender"]];
+    }
     res.status(200).send({
       result: langs.success,
       data: rows,
@@ -33,17 +38,15 @@ const _loadData = async (req, res, next) => {
 const _saveData = async (req, res, next, mode) => {
   const language = req.get('language');
   const langs = strings[language];
-  const params = req.body;
-  const {id, email, firstName, lastName, password, company, position, country, city, phone, allow} = params;
-  const hash = myCrypto.hmacHex(password ? password : '');
-  const rows = [
-    [id, email, firstName, lastName, hash, company, position, country, city, phone, allow],
-    // [id, email, firstName, lastName, hash, position, JSON.stringify(country), city, phone, allow],
-  ];
-  let sql = sprintf("INSERT INTO `%s` VALUES ? ON DUPLICATE KEY UPDATE `email` = VALUES(`email`), `firstName` = VALUES(`firstName`), `lastName` = VALUES(`lastName`), `company` = VALUES(`company`), `position` = VALUES(`position`), `country` = VALUES(`country`), `phone` = VALUES(`phone`);", dbTblName.users);
+  const {id, email, username, firstName, fatherName, lastName, gender, birthday, jobTitle, sector, company, city, phone} = req.body;
 
+  const today = new Date();
+  const date = dateformat(today, "yyyy-mm-dd");
+
+  let sql = sprintf("UPDATE `%s` SET `email` = ?, `username` = ?, `firstName` = ?, `fatherName` = ?, `lastName` = ?, `gender` = ?, `birthday` = ?, `jobTitle` = ?, `sector` = ?, `company` = ?, `city` = ?, `phone` = ?, `modifiedDate` = ? WHERE `id` = ?;", dbTblName.users);
   try {
-    let result = await db.query(sql, [rows]);
+    await db.query(sql, [email, username, firstName, fatherName, lastName, gender, birthday, jobTitle, sector, company, city, phone, date, id]);
+
     res.status(200).send({
       result: langs.success,
       message: !!id ? langs.successfullyEdited : langs.successfullyAdded,

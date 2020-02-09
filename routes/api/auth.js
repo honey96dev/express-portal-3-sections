@@ -1,6 +1,8 @@
 import express from 'express';
 import jwt from 'jsonwebtoken';
 import {sprintf} from 'sprintf-js';
+import dateformat from "dateformat";
+
 import {dbTblName, session, server} from 'core/config';
 import db from 'core/db';
 import myCrypto from 'core/myCrypto';
@@ -169,53 +171,15 @@ const signInProc = async (req, res, next) => {
 };
 
 const signUpProc = async (req, res, next) => {
-  const params = req.body;
   const language = req.get('language');
   const langs = strings[language];
-  const {email, firstName, lastName, password, company, position, country, city, phone} = params;
+  const {email, password, username, firstName, fatherName, lastName, gender, birthday, jobTitle, sector, company, city, countryCode, phone} = req.body;
   const hash = myCrypto.hmacHex(password);
+  const today = new Date();
+  const date = dateformat(today, "yyyy-mm-dd");
 
   let sql = sprintf("SELECT `email` FROM `%s` WHERE BINARY `email` = '%s';", dbTblName.users, email);
-  // dbConn.query(sql, null, (error, rows, fields) => {
-  //   if (error) {
-  //     tracer.error('auth/sign-in', JSON.stringify(error));
-  //     res.status(200).send({
-  //       result: langs.error,
-  //       message: langs.unknownServerError,
-  //     });
-  //     return;
-  //   }
-  //   if (rows.length > 0) {
-  //     res.status(200).send({
-  //       result: langs.error,
-  //       message: langs.emailAlreadyRegistered,
-  //     });
-  //     return;
-  //   }
-  //
-  //   const newRows = [
-  //     [null, email, firstName, lastName, hash, position, JSON.stringify(country), city, phone, 0],
-  //   ];
-  //   sql = sprintf("INSERT INTO `%s` VALUES ?;", dbTblName.users, dbTblName.users);
-  //   dbConn.query(sql, [newRows], (error, rows, fields) => {
-  //     if (error) {
-  //       tracer.error(JSON.stringify(error));
-  //       tracer.error(__filename);
-  //       res.status(200).send({
-  //         result: langs.error,
-  //         message: langs.unknownServerError,
-  //       });
-  //       return;
-  //     }
-  //
-  //     // sendVerificationEmail(email);
-  //
-  //     res.status(200).send({
-  //       result: langs.success,
-  //       message: langs.successfullyRegistered,
-  //     });
-  //   });
-  // });
+
   try {
     let rows = await db.query(sql, null);
     if (rows.length > 0) {
@@ -226,8 +190,7 @@ const signUpProc = async (req, res, next) => {
       return;
     }
     const newRows = [
-      [null, email, firstName, lastName, hash, company, position, country, city, phone, 1],
-      // [null, email, firstName, lastName, hash, position, JSON.stringify(country), city, phone, 0],
+      [null, email, hash, username, firstName, fatherName, lastName, gender, birthday, jobTitle, sector, company, city, countryCode, phone, 0, 0, date, date, "", ""],
     ];
     sql = sprintf("INSERT INTO `%s` VALUES ?;", dbTblName.users, dbTblName.users);
     await db.query(sql, [newRows]);
