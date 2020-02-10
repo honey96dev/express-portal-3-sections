@@ -37,7 +37,7 @@ export default {
   notRegistered: 'You are not registered',
   passwordIsSuccessfullyChanged: "Password is successfully changed",
   forgotPassword: "إعادة تعيين كلمة المرور(Reset Password)",
-  resetEmailIsSent: "An email with instructions to reset your secret code has been sent.",
+  resetEmailIsSent: "An email with instructions to reset your password has been sent.",
   tokenIsValid: "Token is valid",
   tokenIsExpired: "Token is expired. Retry to reset the password.",
   tokenIsNotFound: "Token is invalid. Retry to reset the password.",

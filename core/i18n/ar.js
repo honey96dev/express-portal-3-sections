@@ -37,7 +37,7 @@ export default {
   notRegistered: 'انت لم تسجل',
   passwordIsSuccessfullyChanged: "تم تغيير كلمة السر بنجاح",
   forgotPassword: "إعادة تعيين كلمة المرور(Reset Password)",
-  resetEmailIsSent: "تم ارسال بريد الكتروني يحتوي على تعليمات إعادة تعيين الرمز السري الخاص بك.",
+  resetEmailIsSent: "تم ارسال بريد الكتروني يحتوي على تعليمات إعادة تعيين رمز المرور الخاص بك.",
   tokenIsValid: "الرمز صالح",
   tokenIsExpired: "انتهت صلاحية الرمز. أعد المحاولة لإعادة تعيين كلمة المرور.",
   tokenIsNotFound: "الرمز غير صالح. أعد المحاولة لإعادة تعيين كلمة المرور.",
