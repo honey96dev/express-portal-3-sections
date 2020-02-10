@@ -41,7 +41,7 @@ const _loadApplicants = async (req, res, next) => {
   const params = req.body;
   const {target} = params;
   const langs = strings[language];
-  let sql = sprintf("SELECT J.id, J.jobTitle, J.paid, J.attend, U.id `userId`, U.email, U.firstName, U.lastName, U.company, U.position, U.country, U.city, U.phone, U.allow FROM `%s` J JOIN `%s` U ON U.id = J.userId WHERE `target` = '%s';", dbTblName.courseJoin, dbTblName.users, target);
+  let sql = sprintf("SELECT J.id, J.jobTitle, J.paid, J.attend, U.id `userId`, U.email, U.firstName, U.fatherName, U.lastName, U.jobTitle, U.sector, U.company, U.city, U.countryCode, U.phone, U.allowedDate FROM `%s` J JOIN `%s` U ON U.id = J.userId WHERE `target` = '%s';", dbTblName.courseJoin, dbTblName.users, target);
 
   try {
     let rows = await db.query(sql, null);
